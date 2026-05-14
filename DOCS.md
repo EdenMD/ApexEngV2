@@ -1211,8 +1211,7 @@ This is the safest, cleanest way to title a scene:
 
 ## 17. Auto-Reflow System
 
-The engine automatically detects and fixes overlapping text, shapes and
-charts before rendering each scene.
+The engine automatically detects and fixes overlapping text  before rendering each scene.
 
 ### What it does
 
