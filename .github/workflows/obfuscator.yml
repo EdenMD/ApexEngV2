@@ -3,7 +3,7 @@ name: Obfuscate Engine
 # Runs on push to main, and can be triggered manually
 on:
   push:
-    branches: [main]
+    branches: 
     paths:
       - 'engine-ci.js'
       - 'src/**'
@@ -48,7 +48,7 @@ jobs:
       - name: Obfuscate engine-ci.js
         run: |
           javascript-obfuscator engine-ci.js \
-            --config.obfuscatorrc.json \
+            --config .obfuscatorrc.json \
             --output _obfuscated/engine-ci.js
 
       # 6. Obfuscate all src/*.js files
@@ -57,7 +57,7 @@ jobs:
           for f in src/*.js; do
             filename=$(basename "$f")
             javascript-obfuscator "$f" \
-              --config.obfuscatorrc.json \
+              --config .obfuscatorrc.json \
               --output "_obfuscated/src/$filename"
             echo "Obfuscated: $filename"
           done
@@ -65,8 +65,8 @@ jobs:
       # 7. Replace original files with obfuscated versions
       - name: Replace engine files with obfuscated versions
         run: |
-          cp _obfuscated/engine-ci.js./engine-ci.js
-          cp _obfuscated/src/*.js./src/
+          cp _obfuscated/engine-ci.js ./engine-ci.js
+          cp _obfuscated/src/*.js ./src/
           rm -rf _obfuscated
 
       # 8. Commit and push back to same branch
