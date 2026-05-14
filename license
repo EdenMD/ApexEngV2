@@ -1,0 +1,49 @@
+APEX VIDEO ENGINE — SOURCE AVAILABLE LICENSE
+Version 1.0 — 2026
+
+Copyright (c) 2026 Kingz / NastyTech. All rights reserved.
+
+DEFINITIONS
+  "Software" means the APEX Video Engine source code, configuration files,
+  workflows, documentation, and all associated files in this repository.
+  "Use" means running the Software via GitHub Actions for the purpose of
+  generating video output files.
+  "You" means any individual or entity accessing this repository.
+
+PERMISSIONS — You are permitted to:
+  1. Fork this repository on GitHub for personal, non-commercial use.
+  2. Run the Software via GitHub Actions to generate videos for your own use.
+  3. Modify your local config.js and assets to produce your own videos.
+  4. Study the source code for educational purposes.
+
+RESTRICTIONS — You are NOT permitted to:
+  1. Sell, license, sublicense, or commercially distribute the Software or
+     any derivative of it, in whole or in part, in original or obfuscated form.
+  2. Remove, alter, or obscure this license or any copyright notices.
+  3. Publish the Software, or a substantially similar system derived from it,
+     as your own product or open-source project.
+  4. Use the Software to build a competing video generation service or product.
+  5. Extract, repackage, or redistribute the engine modules (engine-ci.js,
+     src/*.js) outside of this repository structure.
+  6. Run the Software outside of the GitHub Actions environment for which it
+     is licensed. Specifically, commercial self-hosted or cloud deployments
+     are prohibited without a separate written agreement.
+
+ATTRIBUTION
+  Any public content produced using the Software may credit
+  "Powered by APEX Engine" but is not required to do so.
+
+NO WARRANTY
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+  OR IMPLIED. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY
+  CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM USE OF THE SOFTWARE.
+
+ENFORCEMENT
+  Violation of these terms automatically terminates your rights under this
+  license. The copyright holder reserves the right to pursue legal remedies
+  for any breach.
+
+CONTACT
+  For commercial licensing inquiries:
+  WhatsApp: +263716676259
+  Channel:  whatsapp.com/channel/0029Vb80i3y4IBhHw7CoKW0M
