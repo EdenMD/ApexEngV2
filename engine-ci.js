@@ -1,5 +1,27 @@
 #!/usr/bin/env node
 'use strict';
+
+// ── PASTE GUARD HERE ──────────────────────────────
+(function _apexEnvGuard() {
+  const isCI        = process.env.GITHUB_ACTIONS === 'true';
+  const hasRunId    = !!process.env.GITHUB_RUN_ID;
+  const hasRepo     = !!process.env.GITHUB_REPOSITORY;
+  const hasWorkflow = !!process.env.GITHUB_WORKFLOW;
+
+  if (!isCI || !hasRunId || !hasRepo || !hasWorkflow) {
+    console.error('\n');
+    console.error('  APEX ENGINE — LICENSE ERROR');
+    console.error('  ─────────────────────────────────────────────────────');
+    console.error('  Licensed to run on GitHub Actions only.');
+    console.error('  Commercial/local use: WhatsApp +263716676259');
+    console.error('  ─────────────────────────────────────────────────────');
+    console.error('\n');
+    process.exit(1);
+  }
+})();
+// ── END GUARD ─────────────────────────────────────
+
+
 /**
  * engine-ci.js  —  APEX Video Engine v2.0
  * ─────────────────────────────────────────────────────────────────────────
