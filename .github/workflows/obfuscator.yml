@@ -1,6 +1,6 @@
 name: Obfuscate Engine
 
-# Runs every time main is updated
+# Runs on push to main, and can be triggered manually
 on:
   push:
     branches: [main]
@@ -8,6 +8,13 @@ on:
       - 'engine-ci.js'
       - 'src/**'
       - '.obfuscatorrc.json'
+  workflow_dispatch:
+    inputs:
+      target_branch:
+        description: 'Branch to obfuscate and push to'
+        required: true
+        default: 'main'
+        type: string
 
 jobs:
   obfuscate:
@@ -17,10 +24,10 @@ jobs:
 
     steps:
       # 1. Checkout the branch that triggered this run
-      - name: Checkout current branch
+      - name: Checkout branch
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.ref_name }}
+          ref: ${{ github.event.inputs.target_branch || github.ref_name }}
           fetch-depth: 0
 
       # 2. Setup Node
@@ -71,4 +78,4 @@ jobs:
           git diff --staged --quiet && echo "No changes to commit" && exit 0
           COMMIT_SHA=$(git rev-parse --short HEAD)
           git commit -m "chore: obfuscated build from ${COMMIT_SHA} [skip ci]"
-          git push origin HEAD:${{ github.ref_name }}
+          git push origin HEAD:${{ github.event.inputs.target_branch || github.ref_name }}
