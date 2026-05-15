@@ -1,71 +1,42 @@
-name: Low-Memory Text-to-Image Generation
+name: Test Image Generation
 
 on:
   workflow_dispatch:
-    inputs:
-      prompt:
-        description: 'Text prompt for image generation'
-        required: true
-        default: 'A realistic close up portrait of an astronaut on mars'
 
 jobs:
   generate:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
+      - name: Install dependencies
+        run: pip install diffusers transformers accelerate torch --index-url https://download.pytorch.org/whl/cpu
 
-    # 1. Clear unneeded runner software to keep your 14GB SSD limit completely safe
-    - name: Maximize Available Storage Space
-      run: |
-        sudo rm -rf /usr/share/dotnet
-        sudo rm -rf /opt/ghc
-        sudo rm -rf /usr/local/share/boost
+      - name: Generate image
+        run: |
+          python3 - <<'EOF'
+          from diffusers import StableDiffusionPipeline
+          import torch
 
-    # 2. Set up the cache layer for both the compiled software and the model file
-    - name: Cache SD.cpp Binary and Model Weights
-      id: cache-sd
-      uses: actions/cache@v4
-      with:
-        path: |
-          stable-diffusion.cpp/build/sd
-          models/v1-5-pruned-emaonly-Q4_1.gguf
-        key: sd-cpp-v1-cache-${{ runner.os }}
+          pipe = StableDiffusionPipeline.from_pretrained(
+              "runwayml/stable-diffusion-v1-5",
+              torch_dtype=torch.float32,
+          )
+          pipe = pipe.to("cpu")
+          pipe.safety_checker = None
 
-    # 3. Only compiles if the cache was not found (Saves 2 minutes on future runs)
-    - name: Clone and Build stable-diffusion.cpp
-      if: steps.cache-sd.outputs.cache-hit != 'true'
-      run: |
-        git clone --recursive https://github.com
-        cd stable-diffusion.cpp
-        mkdir build
-        cd build
-        cmake ..
-        cmake --build . --config Release
+          image = pipe(
+              "A vast African savanna at golden hour, cinematic wide shot",
+              num_inference_steps=20,
+              width=512,
+              height=512,
+          ).images[0]
 
-    # 4. Only downloads the 2.2GB file if missing from cache (Saves 1.5 minutes on future runs)
-    - name: Download Quantized Model Weight (GGUF)
-      if: steps.cache-sd.outputs.cache-hit != 'true'
-      run: |
-        mkdir -p models
-        curl -L -o models/v1-5-pruned-emaonly-Q4_1.gguf https://huggingface.co
+          image.save("output.png")
+          print("Image saved!")
+          EOF
 
-    # 5. Generates the image using the cached files directly on the CPU
-    - name: Generate Image from Text Prompt
-      run: |
-        ./stable-diffusion.cpp/build/sd \
-          --model models/v1-5-pruned-emaonly-Q4_1.gguf \
-          --prompt "${{ github.event.inputs.prompt }}" \
-          --output output_image.png \
-          --steps 15 \
-          --sampling-method euler \
-          --width 512 \
-          --height 512
-
-    # 6. Extract your completed image out of the runner environment
-    - name: Save Generated Image Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: text-to-image-result
-        path: output_image.png
+      - name: Upload image artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-image
+          path: output.png
