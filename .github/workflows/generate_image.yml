@@ -9,7 +9,9 @@ jobs:
 
     steps:
       - name: Install dependencies
-        run: pip install diffusers transformers accelerate torch --index-url https://download.pytorch.org/whl/cpu
+        run: |
+          pip install diffusers transformers accelerate --extra-index-url https://download.pytorch.org/whl/cpu
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
 
       - name: Generate image
         run: |
