@@ -2,43 +2,52 @@
 /**
  * APEX Engine v2.0 — config.js
  *
- * "The System Is Not Broken. It Is Working Against You."
+ * "The System Is Working Against You"
  *
- * Formula: AI data (430 views) + psychology tricks (323 views) + wealth (108 views)
- * = all three winning formats in one video
+ * FIXES FROM LAST VERSION:
+ *  - bm_lewis removed → af_sky added
+ *  - Simple everyday words — no formal/nerd language
+ *  - All text y positions verified inside their boxes
+ *  - Dividers only placed in clear empty gaps (50px+ from any text)
+ *  - Box heights sized to contain their text with padding
+ *  - maxWidth set to box_width - 80 on all boxed text
+ *  - No particles
+ *  - Target: 55-57 seconds
  *
- * Scene breakdown:
- *   Scene 1 — Hook              3.5s  (silent)
- *   Scene 2 — Reframe           ~8s   (TTS)
- *   Scene 3 — Trick #1 Loss Aversion   ~9s (TTS + chart)
- *   Scene 4 — Trick #2 Inflation theft ~9s (TTS + chart)
- *   Scene 5 — Trick #3 AI displacement ~9s (TTS + donut)
- *   Scene 6 — The counter move  ~8s   (TTS)
- *   Scene 7 — CTA               ~8s   (TTS)
- *   ──────────────────────────────────
- *   Total                       ~54-57s
+ * TIMING:
+ *   S1 — Hook          3.5s  silent
+ *   S2 — Intro         ~7s   bm_george  (~16 words)
+ *   S3 — Trick 1       ~9s   af_sky     (~21 words)
+ *   S4 — Trick 2       ~9s   am_adam    (~20 words)
+ *   S5 — Trick 3       ~9s   bm_george  (~20 words)
+ *   S6 — The truth     ~7s   af_sky     (~17 words)
+ *   S7 — CTA           ~7s   bm_george  (~14 words)
+ *   ─────────────────────────────────────────────
+ *   Total              ~51-54s + transitions ~3s = 54-57s
  *
- * Voices rotate per scene — proven to hold attention longer:
- *   bm_george   — deep authoritative British male
- *   am_adam     — authoritative American male
- *   bm_lewis    — crisp professional British male
+ * VOICE ROTATION:
+ *   bm_george → af_sky → am_adam → bm_george → af_sky → bm_george
  *
- * No particles. v2.0 compliant.
+ * LAYOUT RULE USED THROUGHOUT:
+ *   Shape x/y = CENTER of the box
+ *   Text y    = CENTER of the text line (textBaseline: middle)
+ *   For text to sit inside a box:
+ *     text_y must be between (shape_y - shape_h/2 + 30) and (shape_y + shape_h/2 - 30)
+ *   Dividers placed at y values with 60px+ gap from nearest text
  *
- * Palette:
- *   Black       — #08090b
- *   Dark navy   — #0a0f1e
- *   Red danger  — #dc2626
- *   Cyan data   — #06b6d4
- *   Gold        — #f59e0b
- *   Green safe  — #22c55e
- *   White       — #f1f5f9
+ * PALETTE:
+ *   Black     #08090b
+ *   Red       #dc2626
+ *   Cyan      #06b6d4
+ *   Gold      #f59e0b
+ *   Green     #22c55e
+ *   White     #f1f5f9
  */
 
 module.exports = {
 
   output: {
-    title:   'System-Working-Against-You',
+    title:   'System-Against-You-v2',
     format:  'portrait',
     fps:     30,
     crf:     23,
@@ -46,11 +55,11 @@ module.exports = {
     cleanup: true,
     postProcess: {
       grain:              true,
-      grainStrength:      0.030,
+      grainStrength:      0.028,
       vignette:           true,
-      vignetteStrength:   0.58,
-      colorGrade:         '#06080f',
-      colorGradeStrength: 0.10,
+      vignetteStrength:   0.56,
+      colorGrade:         '#05070e',
+      colorGradeStrength: 0.09,
     },
   },
 
@@ -64,14 +73,13 @@ module.exports = {
 
     // ══════════════════════════════════════════════════════════
     // SCENE 1 — HOOK  (3.5s silent)
-    // Hardest pattern-interrupt possible. Statement that feels
-    // personal and accusatory — forces viewer to read.
+    // Simple. Direct. Everyone understands it immediately.
     // ══════════════════════════════════════════════════════════
     {
       duration: 3.5,
       transition: 'glitch',
       transitionDuration: 0.55,
-      postProcess: { scanlines: true, grain: true, grainStrength: 0.065 },
+      postProcess: { scanlines: true, grain: true, grainStrength: 0.06 },
       layers: [
         {
           type:             'background',
@@ -79,62 +87,61 @@ module.exports = {
           vignette:         true,
           vignetteStrength: 0.7,
         },
-        // Main hook — two-line gut punch
+        // LAYOUT: all text only, no boxes. Simple and clean.
         {
           type:       'text',
-          text:       'THE SYSTEM\nIS NOT BROKEN.',
-          x: 540, y: 560,
-          fontSize:   148,
+          text:       '3 TRICKS',
+          x: 540, y: 520,
+          fontSize:   260,
           fontFamily: 'Impact, Arial Black, sans-serif',
           color:      '#f1f5f9',
-          lineHeight: 1.05,
           shadow:     true,
-          shadowBlur: 40,
+          shadowBlur: 45,
           shadowColor: 'rgba(0,0,0,0.9)',
           animation:  'pop',
           animDur:    0.35,
           startT:     0.0,
           align:      'center',
-          maxWidth:   960,
         },
+        // Divider at y=720. Text bottom = 520 + (260*0.5*0.7) = 520+91=611. Gap = 109px ✓
         {
           type: 'divider',
-          y: 790, x1: 80, x2: 1000,
+          y: 720, x1: 80, x2: 1000,
           color: '#dc2626',
-          thickness: 4,
+          thickness: 5,
           animDur: 0.4,
         },
+        // Text center at y=840. Divider at 720. Gap = 120px ✓
         {
           type:       'text',
-          text:       'It is working against you.',
-          x: 540, y: 900,
-          fontSize:   72,
+          text:       'being used on you right now.',
+          x: 540, y: 840,
+          fontSize:   68,
           fontFamily: 'Arial Black, sans-serif',
           color:      '#dc2626',
           glow:       true,
           glowColor:  '#dc2626',
-          glowBlur:   40,
-          shadow:     true,
-          shadowBlur: 25,
+          glowBlur:   35,
           animation:  'slide-up',
           animDur:    0.4,
-          startT:     0.25,
+          startT:     0.2,
           align:      'center',
           maxWidth:   920,
         },
+        // Text center at y=980. Previous text bottom = 840+34=874. Gap = 106px ✓
         {
           type:       'text',
-          text:       '3 psychological mechanisms\ndesigned to keep you exactly where you are.',
-          x: 540, y: 1120,
-          fontSize:   48,
+          text:       'Most people fall for all three\nevery single day.',
+          x: 540, y: 1060,
+          fontSize:   54,
           fontFamily: 'Arial, sans-serif',
-          color:      'rgba(241,245,249,0.55)',
+          color:      'rgba(241,245,249,0.58)',
           lineHeight: 1.35,
           animation:  'fade',
           animDur:    0.45,
-          startT:     0.7,
+          startT:     0.65,
           align:      'center',
-          maxWidth:   880,
+          maxWidth:   860,
         },
         {
           type:       'progress-bar',
@@ -148,12 +155,13 @@ module.exports = {
     },
 
     // ══════════════════════════════════════════════════════════
-    // SCENE 2 — REFRAME  (~8s)
-    // Voice: bm_george — sets the documentary authority tone
+    // SCENE 2 — INTRO  (~7s)
+    // Voice: bm_george
+    // Plain setup. Short sentences.
     // ══════════════════════════════════════════════════════════
     {
       tts: {
-        text: "Three separate mechanisms — behavioural, economic, and technological — are working in coordination to limit your financial mobility. None of them are accidents. All of them are documented.",
+        text: "Three tricks are being run on you right now. All of them proven. And most people never catch any of them.",
         voice:      'bm_george',
         pauseAfter: 0.3,
       },
@@ -163,142 +171,104 @@ module.exports = {
         {
           type:         'gradient',
           gradientType: 'linear',
-          colors:       ['#08090b', '#0e1220', '#080a12'],
+          colors:       ['#08090b', '#0d1120', '#080a12'],
           angle:        165,
           vignette:     true,
           vignetteStrength: 0.55,
         },
-        // Three numbered labels — teaser of what is coming
-        // Badge y: 210
-        {
-          type:         'shape',
-          shape:        'rect',
-          x: 540, y: 210,
-          width: 640, height: 76,
-          color:        '#dc2626',
-          borderRadius: 38,
-          shadow:       true,
-          shadowColor:  'rgba(220,38,38,0.45)',
-          shadowBlur:   28,
-          animation:    'pop',
-          animDur:      0.3,
-        },
+        // Title — no box, just text
+        // Text center y=430, fontSize=120 → bottom ≈ 430+60=490
         {
           type:       'text',
-          text:       'THREE MECHANISMS',
-          x: 540, y: 212,
-          fontSize:   40,
-          fontFamily: 'Impact, sans-serif',
-          color:      '#ffffff',
+          text:       'THE GAME',
+          x: 540, y: 430,
+          fontSize:   140,
+          fontFamily: 'Impact, Arial Black, sans-serif',
+          color:      '#f1f5f9',
+          glow:       true,
+          glowColor:  '#06b6d4',
+          glowBlur:   45,
+          shadow:     true,
+          shadowBlur: 28,
+          animation:  'slide-down',
+          animDur:    0.5,
+          startT:     0.0,
           align:      'center',
-          animation:  'pop',
-          animDur:    0.3,
         },
-        // Content y: 310
-        // Item 1
+        // Divider: text bottom ≈ 490. Place divider at y=580. Gap = 90px ✓
         {
-          type:         'shape',
-          shape:        'rect',
-          x: 540, y: 480,
-          width: 900, height: 120,
-          color:        'rgba(220,38,38,0.09)',
-          borderRadius: 18,
-          stroke:       true,
-          strokeColor:  'rgba(220,38,38,0.4)',
-          strokeWidth:  2,
-          enterAt:  0.2, enterDur: 0.35,
+          type: 'divider',
+          y: 580, x1: 140, x2: 940,
+          color: '#06b6d4',
+          thickness: 3,
+          animDur: 0.5,
         },
+        // Subtitle: y=720. Divider at 580. Gap = 140px ✓
         {
           type:       'text',
-          text:       '01  Loss Aversion Bias',
-          x: 540, y: 460,
-          fontSize:   56,
+          text:       'You are playing it\nwithout knowing the rules.',
+          x: 540, y: 720,
+          fontSize:   72,
+          fontFamily: 'Arial Black, sans-serif',
+          color:      'rgba(241,245,249,0.82)',
+          lineHeight: 1.28,
+          animation:  'fade',
+          animDur:    0.5,
+          startT:     0.3,
+          align:      'center',
+          maxWidth:   860,
+        },
+        // Sub-sub text: y=930. Previous block: 2 lines at 72px, lineHeight 1.28
+        // Total height ≈ 72*1.28*2=184px. Center 720. Bottom ≈ 720+92=812. Gap to 930 = 118px ✓
+        {
+          type:       'text',
+          text:       'Here are the three.',
+          x: 540, y: 960,
+          fontSize:   58,
+          fontFamily: 'Arial, sans-serif',
+          color:      '#06b6d4',
+          animation:  'fade',
+          animDur:    0.4,
+          startT:     0.8,
+          align:      'center',
+        },
+        // Three preview labels — stacked, no boxes
+        // Starting at y=1120, spaced 110px apart
+        {
+          type:       'text',
+          text:       '1  —  Your Brain',
+          x: 540, y: 1140,
+          fontSize:   52,
           fontFamily: 'Arial Black, sans-serif',
           color:      '#dc2626',
-          align:      'center',
           animation:  'slide-right',
-          animDur:    0.35, startT: 0.25,
-        },
-        {
-          type:       'text',
-          text:       'Behavioural psychology',
-          x: 540, y: 516,
-          fontSize:   36,
-          fontFamily: 'Arial, sans-serif',
-          color:      'rgba(241,245,249,0.5)',
+          animDur:    0.35,
+          startT:     0.5,
           align:      'center',
-          animation:  'fade',
-          animDur:    0.3, startT: 0.35,
-        },
-        // Item 2
-        {
-          type:         'shape',
-          shape:        'rect',
-          x: 540, y: 740,
-          width: 900, height: 120,
-          color:        'rgba(245,158,11,0.09)',
-          borderRadius: 18,
-          stroke:       true,
-          strokeColor:  'rgba(245,158,11,0.4)',
-          strokeWidth:  2,
-          enterAt:  0.55, enterDur: 0.35,
         },
         {
           type:       'text',
-          text:       '02  The Inflation Transfer',
-          x: 540, y: 720,
-          fontSize:   56,
+          text:       '2  —  Your Money',
+          x: 540, y: 1250,
+          fontSize:   52,
           fontFamily: 'Arial Black, sans-serif',
           color:      '#f59e0b',
-          align:      'center',
           animation:  'slide-right',
-          animDur:    0.35, startT: 0.6,
-        },
-        {
-          type:       'text',
-          text:       'Economic design',
-          x: 540, y: 776,
-          fontSize:   36,
-          fontFamily: 'Arial, sans-serif',
-          color:      'rgba(241,245,249,0.5)',
+          animDur:    0.35,
+          startT:     0.65,
           align:      'center',
-          animation:  'fade',
-          animDur:    0.3, startT: 0.7,
-        },
-        // Item 3
-        {
-          type:         'shape',
-          shape:        'rect',
-          x: 540, y: 1000,
-          width: 900, height: 120,
-          color:        'rgba(6,182,212,0.09)',
-          borderRadius: 18,
-          stroke:       true,
-          strokeColor:  'rgba(6,182,212,0.4)',
-          strokeWidth:  2,
-          enterAt:  0.9, enterDur: 0.35,
         },
         {
           type:       'text',
-          text:       '03  AI Displacement',
-          x: 540, y: 980,
-          fontSize:   56,
+          text:       '3  —  Your Job',
+          x: 540, y: 1360,
+          fontSize:   52,
           fontFamily: 'Arial Black, sans-serif',
           color:      '#06b6d4',
-          align:      'center',
           animation:  'slide-right',
-          animDur:    0.35, startT: 0.95,
-        },
-        {
-          type:       'text',
-          text:       'Technological restructuring',
-          x: 540, y: 1036,
-          fontSize:   36,
-          fontFamily: 'Arial, sans-serif',
-          color:      'rgba(241,245,249,0.5)',
+          animDur:    0.35,
+          startT:     0.8,
           align:      'center',
-          animation:  'fade',
-          animDur:    0.3, startT: 1.05,
         },
         {
           type:     'waveform',
@@ -306,29 +276,50 @@ module.exports = {
           x: 54, y: 1700,
           width: 972, height: 70,
           bars:    52,
-          color:   '#dc2626',
+          color:   '#06b6d4',
           opacity: 0.38,
         },
         {
           type:       'progress-bar',
           x: 54, y: 1855,
           width: 972, height: 8,
-          color:      '#dc2626',
-          color2:     '#991b1b',
+          color:      '#06b6d4',
+          color2:     '#0284c7',
           trackColor: 'rgba(255,255,255,0.08)',
         },
       ],
     },
 
     // ══════════════════════════════════════════════════════════
-    // SCENE 3 — TRICK #1: LOSS AVERSION  (~9s)
-    // Voice: am_adam — American authority, different timbre
-    // The psychology mechanism — most relatable, hits first
+    // SCENE 3 — TRICK 1: YOUR BRAIN  (~9s)
+    // Voice: af_sky  (female, energetic — contrast from bm_george)
+    // Loss aversion in plain words
+    //
+    // LAYOUT PLAN:
+    //   Badge:     shape y=210, h=76   → box: 172–248
+    //   Badge txt: y=212, fs=40        → fits inside ✓
+    //
+    //   Left box:  shape x=270, y=700, w=440, h=500  → box: 450–950
+    //     "-$100": y=568, fs=110       → 568±55 = 513–623, inside 450–950 ✓
+    //     "LOSING":y=700, fs=72        → 700±36 = 664–736, inside ✓
+    //     line2:   y=780, fs=42        → 780±21 = 759–801, inside ✓
+    //     line3:   y=840, fs=42        → 840±21 = 819–861, inside ✓
+    //     line4:   y=900, fs=40        → 900±20 = 880–920, inside 450–950 ✓
+    //
+    //   Right box: shape x=810, y=760, w=440, h=380  → box: 570–950
+    //     "+$100": y=640, fs=110       → 640±55 = 585–695, inside 570–950 ✓
+    //     "GAINING":y=760, fs=72       → 760±36 = 724–796, inside ✓
+    //     line2:   y=840, fs=42        → 840±21 = 819–861, inside ✓
+    //     line3:   y=900, fs=40        → 880–920, inside ✓
+    //
+    //   Divider: y=1020. Box bottoms at 950. Gap=70px ✓
+    //   Source:  y=1100, fs=36
+    //   Key txt: y=1260, fs=58 (2 lines) bottom≈1260+74=1334 < 1620 ✓
     // ══════════════════════════════════════════════════════════
     {
       tts: {
-        text: "Mechanism one. Loss aversion. Psychologists have proven that the pain of losing one hundred dollars is twice as powerful as the pleasure of gaining one hundred. Corporations weaponise this. Every limited-time offer, every countdown timer, every fear of missing out — is this mechanism being triggered deliberately.",
-        voice:      'am_adam',
+        text: "Trick one. Losing money hurts your brain twice as much as gaining money feels good. Every sale countdown, every limited offer — that fear is being triggered on purpose.",
+        voice:      'af_sky',
         pauseAfter: 0.35,
       },
       transition: 'zoom-in',
@@ -337,41 +328,44 @@ module.exports = {
         {
           type:         'gradient',
           gradientType: 'linear',
-          colors:       ['#0f0608', '#180a0a', '#0b0506'],
+          colors:       ['#0f0508', '#180a0a', '#0b0405'],
           angle:        160,
           vignette:     true,
           vignetteStrength: 0.6,
         },
-        // Badge — y: 210
+        // Badge: center y=210, h=76 → top=172, bottom=248
         {
           type:         'shape',
           shape:        'rect',
           x: 540, y: 210,
-          width: 560, height: 76,
+          width: 580, height: 76,
           color:        '#dc2626',
           borderRadius: 38,
           shadow:       true,
           shadowColor:  'rgba(220,38,38,0.45)',
           shadowBlur:   28,
-          animation:    'pop', animDur: 0.3,
+          animation:    'pop',
+          animDur:      0.3,
         },
+        // Badge text: y=212, fs=40 → fits within 172–248 ✓
         {
           type:       'text',
-          text:       '01  LOSS AVERSION',
+          text:       'TRICK 1  —  YOUR BRAIN',
           x: 540, y: 212,
-          fontSize:   40,
+          fontSize:   38,
           fontFamily: 'Impact, sans-serif',
           color:      '#ffffff',
           align:      'center',
-          animation:  'pop', animDur: 0.3,
+          animation:  'pop',
+          animDur:    0.3,
         },
-        // Giant pain vs gain visual — content y: 310
-        // Left: PAIN
+
+        // LEFT BOX: center x=270, y=700, w=440, h=500 → top=450, bottom=950
         {
           type:         'shape',
           shape:        'rect',
-          x: 270, y: 680,
-          width: 420, height: 520,
+          x: 270, y: 700,
+          width: 440, height: 500,
           color:        'rgba(220,38,38,0.12)',
           borderRadius: 22,
           stroke:       true,
@@ -379,46 +373,51 @@ module.exports = {
           strokeWidth:  3,
           enterAt:  0.2, enterDur: 0.4,
         },
+        // "-$100": y=568, fs=110 → spans 513–623, inside 450–950 ✓
         {
           type:       'text',
           text:       '-$100',
-          x: 270, y: 540,
-          fontSize:   108,
+          x: 270, y: 568,
+          fontSize:   110,
           fontFamily: 'Impact, sans-serif',
           color:      '#dc2626',
           glow:       true,
           glowColor:  '#dc2626',
-          glowBlur:   45,
+          glowBlur:   40,
           align:      'center',
           animation:  'pop', animDur: 0.4, startT: 0.25,
         },
+        // "LOSING": y=700, fs=72 → spans 664–736, inside ✓
         {
           type:       'text',
-          text:       'PAIN',
-          x: 270, y: 720,
-          fontSize:   80,
+          text:       'LOSING',
+          x: 270, y: 700,
+          fontSize:   72,
           fontFamily: 'Impact, sans-serif',
-          color:      '#dc2626',
+          color:      '#f1f5f9',
           align:      'center',
           animation:  'fade', animDur: 0.35, startT: 0.35,
         },
+        // Description: y=800, fs=40, maxWidth=360 → spans 780–820, inside ✓
         {
           type:       'text',
-          text:       'FEELS THIS\nBIG',
-          x: 270, y: 840,
-          fontSize:   58,
+          text:       'hurts twice\nas much',
+          x: 270, y: 820,
+          fontSize:   40,
           fontFamily: 'Arial Black, sans-serif',
           color:      'rgba(241,245,249,0.8)',
-          lineHeight: 1.2,
+          lineHeight: 1.28,
           align:      'center',
+          maxWidth:   360,
           animation:  'fade', animDur: 0.35, startT: 0.45,
         },
-        // Right: GAIN
+
+        // RIGHT BOX: center x=810, y=760, w=440, h=380 → top=570, bottom=950
         {
           type:         'shape',
           shape:        'rect',
-          x: 810, y: 840,
-          width: 420, height: 360,
+          x: 810, y: 760,
+          width: 440, height: 380,
           color:        'rgba(34,197,94,0.09)',
           borderRadius: 22,
           stroke:       true,
@@ -426,66 +425,75 @@ module.exports = {
           strokeWidth:  2,
           enterAt:  0.5, enterDur: 0.4,
         },
+        // "+$100": y=640, fs=110 → spans 585–695, inside 570–950 ✓
         {
           type:       'text',
           text:       '+$100',
-          x: 810, y: 700,
-          fontSize:   108,
+          x: 810, y: 640,
+          fontSize:   110,
           fontFamily: 'Impact, sans-serif',
           color:      '#22c55e',
           align:      'center',
           animation:  'pop', animDur: 0.4, startT: 0.55,
         },
+        // "GAINING": y=760, fs=72 → spans 724–796, inside ✓
         {
           type:       'text',
-          text:       'JOY',
-          x: 810, y: 870,
-          fontSize:   80,
+          text:       'GAINING',
+          x: 810, y: 760,
+          fontSize:   72,
           fontFamily: 'Impact, sans-serif',
-          color:      '#22c55e',
+          color:      '#f1f5f9',
           align:      'center',
           animation:  'fade', animDur: 0.35, startT: 0.65,
         },
+        // Description: y=870, maxWidth=360 → inside 570–950 ✓
         {
           type:       'text',
-          text:       'Feels half\nas good',
-          x: 810, y: 980,
-          fontSize:   58,
+          text:       'feels half\nas good',
+          x: 810, y: 876,
+          fontSize:   40,
           fontFamily: 'Arial Black, sans-serif',
           color:      'rgba(241,245,249,0.8)',
-          lineHeight: 1.2,
+          lineHeight: 1.28,
           align:      'center',
+          maxWidth:   360,
           animation:  'fade', animDur: 0.35, startT: 0.75,
         },
-        // Source + key line
+
+        // Divider: y=1020. Both box bottoms at 950. Gap=70px ✓
         {
           type: 'divider',
-          y: 1200, x1: 120, x2: 960,
+          y: 1020, x1: 120, x2: 960,
           color: 'rgba(220,38,38,0.3)',
-          thickness: 1, animDur: 0.4,
+          thickness: 2, animDur: 0.4,
         },
+        // Source: y=1100. Divider at 1020. Gap=80px ✓
         {
           type:       'text',
-          text:       'Kahneman & Tversky, 1979\nNobel Prize-winning research',
-          x: 540, y: 1270,
-          fontSize:   38,
+          text:       'Nobel Prize research — Kahneman & Tversky',
+          x: 540, y: 1100,
+          fontSize:   36,
           fontFamily: 'Arial, sans-serif',
-          color:      'rgba(241,245,249,0.35)',
-          lineHeight: 1.4,
+          color:      'rgba(241,245,249,0.32)',
           align:      'center',
+          maxWidth:   860,
           animation:  'fade', animDur: 0.4, startT: 1.0,
         },
+        // Key line: y=1260. Source bottom=1100+18=1118. Gap=142px ✓
+        // 2 lines at fs=56, lineHeight=1.25 → total≈140px, bottom≈1260+70=1330 ✓
         {
-          type:          'kinetic-text',
-          text:          'EVERY SALE EXPLOITS THIS',
-          x: 540, y: 1480,
-          fontSize:      66,
-          fontFamily:    'Impact, Arial Black, sans-serif',
-          color:         'rgba(241,245,249,0.14)',
-          highlightColor:'#dc2626',
-          kineticStyle:  'stamp',
-          wordsPerRow:   2,
-          enterAt:       1.6,
+          type:       'text',
+          text:       'Every sale you see is\ntriggering this on purpose.',
+          x: 540, y: 1320,
+          fontSize:   56,
+          fontFamily: 'Arial Black, sans-serif',
+          color:      '#f1f5f9',
+          lineHeight: 1.25,
+          align:      'center',
+          maxWidth:   880,
+          shadow:     true, shadowBlur: 18,
+          animation:  'slide-up', animDur: 0.45, startT: 1.4,
         },
         {
           type:     'waveform',
@@ -508,14 +516,22 @@ module.exports = {
     },
 
     // ══════════════════════════════════════════════════════════
-    // SCENE 4 — TRICK #2: INFLATION TRANSFER  (~9s)
-    // Voice: bm_lewis — crisp, different from am_adam
-    // Your proven donut format — 430 views on Facebook
+    // SCENE 4 — TRICK 2: YOUR MONEY  (~9s)
+    // Voice: am_adam  (American male — third distinct voice)
+    // Inflation in plain words + the proven donut chart
+    //
+    // LAYOUT PLAN:
+    //   Badge:  y=210, h=76
+    //   Donut:  x=540, y=760, cx=540, cy=760, w=620, h=620
+    //           → top=450, bottom=1070
+    //   Source: y=1145. Bottom of donut=1070. Gap=75px ✓
+    //   Divider:y=1228. Source bottom=1145+18=1163. Gap=65px ✓
+    //   Key txt:y=1380 (2 lines fs=58) → bottom≈1380+74=1454 < 1700 ✓
     // ══════════════════════════════════════════════════════════
     {
       tts: {
-        text: "Mechanism two. Inflation is not random economic weather. Between 2020 and 2023, the bottom ninety percent of earners saw their real purchasing power fall. The top one percent added twenty six trillion dollars in net worth during the same period.",
-        voice:      'bm_lewis',
+        text: "Trick two. While your food and rent got more expensive, the top one percent added twenty six trillion dollars in the same three years. That is not a coincidence.",
+        voice:      'am_adam',
         pauseAfter: 0.35,
       },
       transition: 'iris',
@@ -524,16 +540,16 @@ module.exports = {
         {
           type:         'gradient',
           gradientType: 'radial',
-          colors:       ['#08090e', '#060810', '#040609'],
+          colors:       ['#0a090c', '#070810', '#040508'],
           vignette:     true,
           vignetteStrength: 0.62,
         },
-        // Badge — y: 210
+        // Badge: y=210, h=76 → top=172, bottom=248
         {
           type:         'shape',
           shape:        'rect',
           x: 540, y: 210,
-          width: 640, height: 76,
+          width: 580, height: 76,
           color:        '#f59e0b',
           borderRadius: 38,
           shadow:       true,
@@ -541,9 +557,10 @@ module.exports = {
           shadowBlur:   28,
           animation:    'pop', animDur: 0.3,
         },
+        // Badge text: y=212, fs=38 → within 172–248 ✓
         {
           type:       'text',
-          text:       '02  INFLATION TRANSFER',
+          text:       'TRICK 2  —  YOUR MONEY',
           x: 540, y: 212,
           fontSize:   38,
           fontFamily: 'Impact, sans-serif',
@@ -551,13 +568,14 @@ module.exports = {
           align:      'center',
           animation:  'pop', animDur: 0.3,
         },
-        // Donut — the proven 430-view format — cx/cy === x/y
+        // Donut: cx=540, cy=760, w=620, h=620 → top=450, bottom=1070
+        // cx/cy MUST equal x/y per v2.0 docs
         {
           type:      'chart',
           chartType: 'donut',
-          x: 540,  y: 800,
-          cx: 540, cy: 800,
-          width: 660, height: 660,
+          x: 540,  y: 760,
+          cx: 540, cy: 760,
+          width: 620, height: 620,
           animDur:   1.8,
           explode:   true,
           enterAt:   0.3,
@@ -567,33 +585,38 @@ module.exports = {
             { label: 'Bottom 90%', value: 17, color: '#1e2535' },
           ],
         },
+        // Source: y=1145. Donut bottom=1070. Gap=75px ✓
         {
           type:       'text',
-          text:       'Share of new wealth created (2020-2023)',
-          x: 540, y: 1195,
-          fontSize:   34,
+          text:       'Share of new wealth created — 2020 to 2023',
+          x: 540, y: 1148,
+          fontSize:   36,
           fontFamily: 'Arial, sans-serif',
-          color:      'rgba(241,245,249,0.38)',
+          color:      'rgba(241,245,249,0.36)',
           align:      'center',
+          maxWidth:   860,
+          animation:  'fade', animDur: 0.4, startT: 0.5,
         },
+        // Divider: y=1228. Source bottom≈1148+18=1166. Gap=62px ✓
         {
           type: 'divider',
-          y: 1262, x1: 120, x2: 960,
+          y: 1232, x1: 120, x2: 960,
           color: 'rgba(245,158,11,0.28)',
-          thickness: 1, animDur: 0.4,
+          thickness: 2, animDur: 0.4,
         },
+        // Key text: y=1390, 2 lines fs=56 → bottom≈1390+70=1460 < 1700 ✓
         {
           type:       'text',
-          text:       'Inflation does not destroy wealth.\nIt moves it upward.',
-          x: 540, y: 1398,
+          text:       'When prices go up,\nmoney moves to the top.',
+          x: 540, y: 1390,
           fontSize:   60,
           fontFamily: 'Arial Black, sans-serif',
           color:      '#f1f5f9',
-          lineHeight: 1.25,
+          lineHeight: 1.22,
           align:      'center',
           maxWidth:   880,
-          animation:  'slide-up',
-          animDur:    0.45, startT: 1.5,
+          shadow:     true, shadowBlur: 18,
+          animation:  'slide-up', animDur: 0.45, startT: 1.5,
         },
         {
           type:     'waveform',
@@ -616,13 +639,31 @@ module.exports = {
     },
 
     // ══════════════════════════════════════════════════════════
-    // SCENE 5 — TRICK #3: AI DISPLACEMENT  (~9s)
-    // Voice: bm_george — closing authority voice returns
-    // Your #1 performing content format
+    // SCENE 5 — TRICK 3: YOUR JOB  (~9s)
+    // Voice: bm_george  (authority returns for the big number)
+    //
+    // LAYOUT PLAN:
+    //   Badge:      y=210, h=76
+    //   "300M":     y=600, fs=380 → approx top=467, bottom=733
+    //               BUT badge bottom=248. Content zone starts 310.
+    //               Top of "300M" text center at 600, fs=380
+    //               approx text top = 600 - (380*0.35) = 600-133 = 467 > 310 ✓
+    //   "jobs gone":y=870, fs=60 → bottom≈870+30=900
+    //   Divider:    y=970. Gap from text=70px ✓
+    //   2 stat boxes side by side:
+    //     Left box:  x=270, y=1180, w=420, h=320 → top=1020, bottom=1340
+    //       "85%":   y=1080, fs=130 → spans 1025–1155, inside 1020–1340 ✓
+    //       text:    y=1232, fs=38  → spans 1213–1251, inside ✓
+    //       text:    y=1285, fs=38  → spans 1266–1304, inside ✓
+    //     Right box: x=810, y=1180, w=420, h=320 → same
+    //       "10":    y=1080, fs=130 → inside ✓
+    //       text:    y=1232, fs=38  → inside ✓
+    //       text:    y=1285, fs=38  → inside ✓
+    //   Bottom box bottoms at 1340. Waveform at 1700. Gap = 360px ✓
     // ══════════════════════════════════════════════════════════
     {
       tts: {
-        text: "Mechanism three. Three hundred million jobs. That is Goldman Sachs's documented projection for AI-driven displacement by 2030. And eighty five percent of companies that deployed AI already cut headcount within eighteen months.",
+        text: "Trick three. Three hundred million jobs gone by 2030. Goldman Sachs put that in writing. And eighty five percent of companies using AI have already let people go.",
         voice:      'bm_george',
         pauseAfter: 0.35,
       },
@@ -636,12 +677,12 @@ module.exports = {
           vignette:         true,
           vignetteStrength: 0.75,
         },
-        // Badge — y: 210
+        // Badge: y=210, h=76 → top=172, bottom=248
         {
           type:         'shape',
           shape:        'rect',
           x: 540, y: 210,
-          width: 580, height: 76,
+          width: 560, height: 76,
           color:        '#06b6d4',
           borderRadius: 38,
           shadow:       true,
@@ -649,22 +690,23 @@ module.exports = {
           shadowBlur:   28,
           animation:    'pop', animDur: 0.3,
         },
+        // Badge text: y=212, fs=38 → within 172–248 ✓
         {
           type:       'text',
-          text:       '03  AI DISPLACEMENT',
+          text:       'TRICK 3  —  YOUR JOB',
           x: 540, y: 212,
-          fontSize:   40,
+          fontSize:   38,
           fontFamily: 'Impact, sans-serif',
           color:      '#000000',
           align:      'center',
           animation:  'pop', animDur: 0.3,
         },
-        // Giant number — your proven hook
+        // "300M": y=600, fs=380 → top≈467 > badge bottom 248, content zone 310 ✓
         {
           type:       'text',
           text:       '300M',
-          x: 540, y: 660,
-          fontSize:   400,
+          x: 540, y: 600,
+          fontSize:   380,
           fontFamily: 'Impact, Arial Black, sans-serif',
           gradient:   ['#06b6d4', '#0284c7'],
           glow:       true,
@@ -673,85 +715,132 @@ module.exports = {
           shadow:     true,
           shadowBlur: 70,
           shadowColor: 'rgba(6,182,212,0.55)',
-          animation:  'pop',
-          animDur:    0.4, startT: 0.0,
+          animation:  'pop', animDur: 0.4, startT: 0.0,
           align:      'center',
         },
+        // "jobs gone by 2030": y=870, fs=60 → bottom≈900
+        // "300M" bottom ≈ 600+133=733. Gap = 870-733=137px ✓
         {
           type:       'text',
-          text:       'jobs eliminated by 2030.',
-          x: 540, y: 900,
+          text:       'jobs gone by 2030.',
+          x: 540, y: 870,
           fontSize:   60,
           fontFamily: 'Arial Black, sans-serif',
           color:      '#f1f5f9',
           align:      'center',
-          animation:  'slide-up',
-          animDur:    0.4, startT: 0.25,
+          animation:  'slide-up', animDur: 0.4, startT: 0.25,
           maxWidth:   880,
         },
+        // Divider: y=970. Text bottom≈870+30=900. Gap=70px ✓
         {
           type: 'divider',
-          y: 1000, x1: 140, x2: 940,
+          y: 970, x1: 140, x2: 940,
           color: 'rgba(6,182,212,0.4)',
           thickness: 2, animDur: 0.45,
         },
-        // Side-by-side fast stats
+
+        // LEFT BOX: x=270, y=1180, w=420, h=320 → top=1020, bottom=1340
+        {
+          type:         'shape',
+          shape:        'rect',
+          x: 270, y: 1180,
+          width: 420, height: 320,
+          color:        'rgba(220,38,38,0.1)',
+          borderRadius: 18,
+          stroke:       true,
+          strokeColor:  'rgba(220,38,38,0.45)',
+          strokeWidth:  2,
+          enterAt:  0.8, enterDur: 0.4,
+        },
+        // "85%": y=1080, fs=130 → spans 1025–1155, inside 1020–1340 ✓
         {
           type:       'text',
           text:       '85%',
-          x: 270, y: 1130,
-          fontSize:   160,
+          x: 270, y: 1090,
+          fontSize:   130,
           fontFamily: 'Impact, sans-serif',
-          gradient:   ['#dc2626', '#991b1b'],
+          color:      '#dc2626',
           glow:       true,
           glowColor:  '#dc2626',
-          glowBlur:   50,
+          glowBlur:   45,
           align:      'center',
-          animation:  'pop', animDur: 0.4, startT: 0.8,
+          animation:  'pop', animDur: 0.4, startT: 0.85,
         },
+        // Text: y=1240, fs=38 → spans 1221–1259, inside 1020–1340 ✓
         {
           type:       'text',
-          text:       'of AI companies\nalready cut jobs',
-          x: 270, y: 1268,
+          text:       'of AI companies',
+          x: 270, y: 1236,
           fontSize:   38,
-          fontFamily: 'Arial, sans-serif',
-          color:      'rgba(241,245,249,0.65)',
-          lineHeight: 1.3,
+          fontFamily: 'Arial Black, sans-serif',
+          color:      'rgba(241,245,249,0.85)',
           align:      'center',
-          animation:  'fade', animDur: 0.35, startT: 0.9,
-          maxWidth:   440,
+          maxWidth:   380,
+          animation:  'fade', animDur: 0.35, startT: 0.95,
         },
+        // Text: y=1293, fs=38 → spans 1274–1312, inside 1020–1340 ✓
+        {
+          type:       'text',
+          text:       'cut jobs already',
+          x: 270, y: 1293,
+          fontSize:   38,
+          fontFamily: 'Arial Black, sans-serif',
+          color:      'rgba(241,245,249,0.85)',
+          align:      'center',
+          maxWidth:   380,
+          animation:  'fade', animDur: 0.35, startT: 1.05,
+        },
+
+        // RIGHT BOX: x=810, y=1180, w=420, h=320 → top=1020, bottom=1340
         {
           type:         'shape',
-          shape:        'line',
-          x: 540, y: 1100,
-          width: 2, height: 240,
-          color:        'rgba(241,245,249,0.15)',
+          shape:        'rect',
+          x: 810, y: 1180,
+          width: 420, height: 320,
+          color:        'rgba(245,158,11,0.1)',
+          borderRadius: 18,
+          stroke:       true,
+          strokeColor:  'rgba(245,158,11,0.45)',
+          strokeWidth:  2,
+          enterAt:  0.8, enterDur: 0.4,
         },
+        // "10": y=1090, fs=130 → inside 1020–1340 ✓
         {
           type:       'text',
           text:       '10',
-          x: 810, y: 1130,
-          fontSize:   160,
+          x: 810, y: 1090,
+          fontSize:   130,
           fontFamily: 'Impact, sans-serif',
-          gradient:   ['#f59e0b', '#d97706'],
+          color:      '#f59e0b',
           glow:       true,
           glowColor:  '#f59e0b',
-          glowBlur:   50,
+          glowBlur:   45,
           align:      'center',
-          animation:  'pop', animDur: 0.4, startT: 1.0,
+          animation:  'pop', animDur: 0.4, startT: 0.85,
         },
+        // Text: y=1236, fs=38 → inside ✓
         {
           type:       'text',
-          text:       'years to complete\nthe shift',
-          x: 810, y: 1268,
+          text:       'years to finish',
+          x: 810, y: 1236,
           fontSize:   38,
-          fontFamily: 'Arial, sans-serif',
-          color:      'rgba(241,245,249,0.65)',
-          lineHeight: 1.3,
+          fontFamily: 'Arial Black, sans-serif',
+          color:      'rgba(241,245,249,0.85)',
           align:      'center',
-          animation:  'fade', animDur: 0.35, startT: 1.1,
-          maxWidth:   440,
+          maxWidth:   380,
+          animation:  'fade', animDur: 0.35, startT: 0.95,
+        },
+        // Text: y=1293, fs=38 → inside ✓
+        {
+          type:       'text',
+          text:       'the shift',
+          x: 810, y: 1293,
+          fontSize:   38,
+          fontFamily: 'Arial Black, sans-serif',
+          color:      'rgba(241,245,249,0.85)',
+          align:      'center',
+          maxWidth:   380,
+          animation:  'fade', animDur: 0.35, startT: 1.05,
         },
         {
           type:       'progress-bar',
@@ -765,14 +854,24 @@ module.exports = {
     },
 
     // ══════════════════════════════════════════════════════════
-    // SCENE 6 — THE COUNTER MOVE  (~8s)
-    // Voice: am_adam — different voice = feels like new speaker
-    // Gives hope — keeps people following
+    // SCENE 6 — THE TRUTH  (~7s)
+    // Voice: af_sky  (female close — emotional contrast)
+    // Simple hopeful message. Short sentences.
+    //
+    // LAYOUT PLAN:
+    //   Badge:    y=210, h=76
+    //   Quote:    y=700 (2 lines, fs=88, lh=1.15)
+    //             line spacing=88*1.15=101px
+    //             line1 center: 700-50=650, top=650-44=606 > 310 ✓
+    //             line2 center: 700+50=750, bottom=750+44=794
+    //   Divider:  y=880. Quote bottom=794. Gap=86px ✓
+    //   Text:     y=1000, fs=60. Bottom=1000+30=1030
+    //   Text:     y=1120, fs=60. Bottom=1120+30=1150 < 1700 ✓
     // ══════════════════════════════════════════════════════════
     {
       tts: {
-        text: "Knowing these mechanisms does not change the system. But it changes how you move inside it. The people who come out ahead are not luckier. They simply saw the rules clearly before everyone else did.",
-        voice:      'am_adam',
+        text: "Now you know. The people winning are not luckier than you. They just saw the rules before everyone else did. Now you have seen them too.",
+        voice:      'af_sky',
         pauseAfter: 0.3,
       },
       transition: 'slide-left',
@@ -781,17 +880,17 @@ module.exports = {
         {
           type:         'gradient',
           gradientType: 'linear',
-          colors:       ['#040c08', '#060e0a', '#030807'],
+          colors:       ['#030c06', '#040e08', '#030906'],
           angle:        158,
           vignette:     true,
           vignetteStrength: 0.55,
         },
-        // Badge — y: 210
+        // Badge: y=210, h=76
         {
           type:         'shape',
           shape:        'rect',
           x: 540, y: 210,
-          width: 500, height: 76,
+          width: 480, height: 76,
           color:        '#22c55e',
           borderRadius: 38,
           shadow:       true,
@@ -801,54 +900,66 @@ module.exports = {
         },
         {
           type:       'text',
-          text:       'THE COUNTER MOVE',
+          text:       'THE TRUTH',
           x: 540, y: 212,
-          fontSize:   38,
+          fontSize:   42,
           fontFamily: 'Impact, sans-serif',
           color:      '#000000',
           align:      'center',
           animation:  'pop', animDur: 0.3,
         },
-        // Big quote-style statement — content y: 310
+        // Quote: y=700, fs=88, 2 lines
+        // line1 top≈606 > badge bottom 248 & content zone 310 ✓
         {
           type:       'text',
-          text:       '"The people who\ncome out ahead\nare not luckier."',
-          x: 540, y: 760,
-          fontSize:   98,
-          fontFamily: 'Georgia, serif',
+          text:       'The people winning\nare not luckier.',
+          x: 540, y: 700,
+          fontSize:   88,
+          fontFamily: 'Impact, Arial Black, sans-serif',
           color:      '#f1f5f9',
-          lineHeight: 1.18,
-          shadow:     true,
-          shadowBlur: 25,
+          lineHeight: 1.15,
+          shadow:     true, shadowBlur: 28,
           glow:       true,
           glowColor:  '#22c55e',
           glowBlur:   30,
           animation:  'slide-down',
           animDur:    0.5, startT: 0.0,
           align:      'center',
-          maxWidth:   880,
+          maxWidth:   900,
         },
+        // Divider: y=880. Quote bottom≈794. Gap=86px ✓
         {
           type: 'divider',
-          y: 1070, x1: 140, x2: 940,
+          y: 880, x1: 140, x2: 940,
           color: 'rgba(34,197,94,0.35)',
           thickness: 2, animDur: 0.45,
         },
+        // Text: y=1000, fs=62. Divider at 880. Gap=120px ✓
         {
           type:       'text',
-          text:       'They simply saw the rules clearly\nbefore everyone else did.',
-          x: 540, y: 1210,
-          fontSize:   58,
+          text:       'They just saw the rules first.',
+          x: 540, y: 1010,
+          fontSize:   62,
           fontFamily: 'Arial Black, sans-serif',
           color:      '#22c55e',
-          lineHeight: 1.28,
           glow:       true,
           glowColor:  '#22c55e',
           glowBlur:   22,
           align:      'center',
+          animation:  'fade', animDur: 0.4, startT: 0.7,
           maxWidth:   880,
-          animation:  'slide-up',
-          animDur:    0.45, startT: 0.8,
+        },
+        // Text: y=1130. Previous bottom≈1010+31=1041. Gap=89px ✓
+        {
+          type:       'text',
+          text:       'Now you have too.',
+          x: 540, y: 1140,
+          fontSize:   62,
+          fontFamily: 'Arial Black, sans-serif',
+          color:      'rgba(241,245,249,0.8)',
+          align:      'center',
+          animation:  'fade', animDur: 0.4, startT: 1.1,
+          maxWidth:   880,
         },
         {
           type:     'waveform',
@@ -871,12 +982,26 @@ module.exports = {
     },
 
     // ══════════════════════════════════════════════════════════
-    // SCENE 7 — CTA  (~8s)
-    // Voice: bm_george — authority voice closes it
+    // SCENE 7 — CTA  (~7s)
+    // Voice: bm_george  (authority closes it)
+    //
+    // LAYOUT PLAN:
+    //   "NOW YOU\nKNOW.": y=500, fs=152, lh=1.0
+    //     line1 center: 500-76=424, top≈424-76=348 > 310 ✓
+    //     line2 center: 500+76=576, bottom≈576+76=652
+    //   Divider:  y=740. Text bottom≈652. Gap=88px ✓
+    //   Text:     y=868, fs=68. Bottom≈868+34=902
+    //   Divider:  y=980. Gap=78px ✓
+    //   CTA box:  shape y=1130, h=210 → top=1025, bottom=1235
+    //     line1:  y=1088, fs=50 → spans 1063–1113, inside ✓
+    //     line2:  y=1168, fs=50 → spans 1143–1193, inside ✓
+    //   Pill:     shape y=1450, h=90 → top=1405, bottom=1495
+    //     text:   y=1452, fs=44 → spans 1430–1474, inside ✓
+    //   Waveform: y=1700. Pill bottom 1495. Gap=205px ✓
     // ══════════════════════════════════════════════════════════
     {
       tts: {
-        text: "This channel breaks down the data and the psychology most people never see. Follow now. New breakdown every week.",
+        text: "Follow for weekly breakdowns on how the game really works. New video every single week.",
         voice:      'bm_george',
         pauseAfter: 0.55,
       },
@@ -892,96 +1017,107 @@ module.exports = {
           vignette:     true,
           vignetteStrength: 0.52,
         },
+        // "NOW YOU\nKNOW.": y=500, fs=152
+        // line1 top≈348 > 310 ✓ (barely — keep it)
         {
           type:       'text',
           text:       'NOW YOU\nKNOW.',
-          x: 540, y: 490,
-          fontSize:   168,
+          x: 540, y: 500,
+          fontSize:   152,
           fontFamily: 'Impact, Arial Black, sans-serif',
           color:      '#f1f5f9',
-          lineHeight: 1.05,
-          glow:       true,
-          glowColor:  '#06b6d4',
-          glowBlur:   55,
-          shadow:     true,
-          shadowBlur: 40,
-          animation:  'slide-down',
-          animDur:    0.5, startT: 0.0,
+          lineHeight: 1.0,
+          glow:       true, glowColor: '#06b6d4', glowBlur: 55,
+          shadow:     true, shadowBlur: 40,
+          animation:  'slide-down', animDur: 0.5, startT: 0.0,
           align:      'center',
         },
+        // Divider: y=740. Text bottom≈652. Gap=88px ✓
         {
           type: 'divider',
-          y: 720, x1: 80, x2: 1000,
+          y: 740, x1: 80, x2: 1000,
           color: '#06b6d4',
           thickness: 3, animDur: 0.5,
         },
+        // "Most people never will.": y=868, fs=68
         {
           type:       'text',
           text:       'Most people never will.',
-          x: 540, y: 840,
-          fontSize:   72,
+          x: 540, y: 868,
+          fontSize:   68,
           fontFamily: 'Arial Black, sans-serif',
-          color:      'rgba(241,245,249,0.75)',
-          animation:  'fade',
-          animDur:    0.45, startT: 0.4,
+          color:      'rgba(241,245,249,0.78)',
+          animation:  'fade', animDur: 0.45, startT: 0.4,
           align:      'center',
           maxWidth:   900,
         },
+        // Divider: y=980. Text bottom≈902. Gap=78px ✓
         {
           type: 'divider',
-          y: 960, x1: 200, x2: 880,
+          y: 980, x1: 200, x2: 880,
           color: 'rgba(241,245,249,0.12)',
           thickness: 1, animDur: 0.4,
         },
-        // CTA box
+        // CTA box: y=1130, h=210 → top=1025, bottom=1235
         {
           type:         'shape',
           shape:        'rect',
           x: 540, y: 1130,
-          width: 900, height: 200,
+          width: 900, height: 210,
           color:        'rgba(6,182,212,0.09)',
           borderRadius: 22,
           stroke:       true,
           strokeColor:  '#06b6d4',
           strokeWidth:  2,
-          enterAt:  0.9, enterDur: 0.5,
+          enterAt: 0.9, enterDur: 0.5,
         },
+        // Line 1: y=1088, fs=50 → spans 1063–1113, inside 1025–1235 ✓
         {
           type:       'text',
-          text:       'Follow for weekly breakdowns\non data they do not want you to see.',
-          x: 540, y: 1132,
+          text:       'Follow for weekly breakdowns',
+          x: 540, y: 1088,
           fontSize:   48,
           fontFamily: 'Arial, sans-serif',
           color:      '#f1f5f9',
-          lineHeight: 1.32,
           align:      'center',
           maxWidth:   840,
-          animation:  'fade',
-          animDur:    0.5, startT: 1.0,
+          animation:  'fade', animDur: 0.5, startT: 1.0,
         },
-        // Bottom pill — red urgency
+        // Line 2: y=1168, fs=50 → spans 1143–1193, inside 1025–1235 ✓
+        {
+          type:       'text',
+          text:       'on how the game really works.',
+          x: 540, y: 1172,
+          fontSize:   48,
+          fontFamily: 'Arial, sans-serif',
+          color:      '#f1f5f9',
+          align:      'center',
+          maxWidth:   840,
+          animation:  'fade', animDur: 0.5, startT: 1.1,
+        },
+        // Pill: y=1450, h=90 → top=1405, bottom=1495
         {
           type:         'shape',
           shape:        'rect',
-          x: 540, y: 1480,
+          x: 540, y: 1450,
           width: 780, height: 90,
           color:        '#dc2626',
           borderRadius: 45,
           shadow:       true,
           shadowColor:  'rgba(220,38,38,0.45)',
-          shadowBlur:   30,
-          enterAt:  1.6, enterDur: 0.4,
+          shadowBlur:   28,
+          enterAt: 1.6, enterDur: 0.4,
         },
+        // Pill text: y=1452, fs=44 → spans 1430–1474, inside 1405–1495 ✓
         {
           type:       'text',
           text:       'NEW VIDEO EVERY WEEK',
-          x: 540, y: 1482,
+          x: 540, y: 1452,
           fontSize:   44,
           fontFamily: 'Impact, sans-serif',
           color:      '#ffffff',
           align:      'center',
-          animation:  'fade',
-          animDur:    0.4, startT: 1.7,
+          animation:  'fade', animDur: 0.4, startT: 1.7,
         },
         {
           type:     'waveform',
