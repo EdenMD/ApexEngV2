@@ -1,10 +1,10 @@
 // config.js
-// Test version: 20s, 5 scenes, 5 voices - 4 male + 1 female (Isabella)
-// Voices: am_adam, bm_george, am_michael, am_james, bf_isabella
+// 20s, 5 scenes, 4 voices
+// Voices in order: am_adam, am_michael, bm_george, am_michael, am_james
 
 module.exports = {
   output: {
-    title: 'Consistency_20s_5Voice',
+    title: 'Consistency_20s_4Voice_Final',
     format: 'portrait',
     width: 1080,
     height: 1920,
@@ -27,7 +27,7 @@ module.exports = {
 
   scenes: [
 
-    // SCENE 1 — HOOK [0-3.5s] Voice 1: am_adam - Male
+    // SCENE 1 — HOOK [0-3.5s] Voice 1: am_adam
     {
       duration: 3.5,
       tts: {
@@ -51,20 +51,20 @@ module.exports = {
       ]
     },
 
-    // SCENE 2 — PROBLEM [3.5-7.5s] Voice 2: bf_isabella - British female
+    // SCENE 2 — PROBLEM [3.5-7.5s] Voice 2: am_michael
     {
       duration: 4.0,
       tts: {
-        text: 'Some talented people quit too early.',
-        voice: 'bf_isabella'
+        text: 'Talent quits. Consistency doesn\'t. That\'s why average beats gifted.',
+        voice: 'am_michael'
       },
       layers: [
         { type: 'gradient', colors: ['#111827', '#020617'] },
         {
           type: 'text',
-          text: 'TALENT\nWITHOUT GRIT\nFAILS.',
+          text: 'TALENT QUITS.\nCONSISTENCY DOESN\'T.',
           y: 560,
-          fontSize: 108,
+          fontSize: 112,
           lineHeight: 1.0,
           color: '#ffffff',
           fontWeight: '900',
@@ -81,17 +81,17 @@ module.exports = {
           data: [
             { label: 'TALENT', value: 95, color: '#ef4444' },
             { label: 'QUIT', value: 100, color: '#f59e0b' },
-            { label: 'RESULT', value: 20, color: '#ffffff' }
+            { label: 'RESULT', value: 22, color: '#ffffff' }
           ]
         }
       ]
     },
 
-    // SCENE 3 — SHIFT [7.5-11s] Voice 3: bm_george - Male
+    // SCENE 3 — SHIFT [7.5-11s] Voice 3: bm_george
     {
       duration: 3.5,
       tts: {
-        text: 'Average people win by refusing to stop.',
+        text: 'Average people win by showing up when gifted people stop.',
         voice: 'bm_george'
       },
       layers: [
@@ -108,7 +108,7 @@ module.exports = {
         },
         {
           type: 'text',
-          text: 'SMALL STEPS DAILY.',
+          text: 'SHOW UP DAILY.',
           y: 1050,
           fontSize: 56,
           color: '#22c55e',
@@ -117,11 +117,11 @@ module.exports = {
       ]
     },
 
-    // SCENE 4 — PROOF [11-15.5s] Voice 4: am_michael - Male
+    // SCENE 4 — PROOF [11-15.5s] Voice 4: am_michael - repeat
     {
       duration: 4.5,
       tts: {
-        text: 'Consistency looks boring until it becomes unstoppable.',
+        text: 'Boring work compounds. One day you wake up unstoppable.',
         voice: 'am_michael'
       },
       layers: [
@@ -155,11 +155,11 @@ module.exports = {
       ]
     },
 
-    // SCENE 5 — CTA [15.5-20s] Voice 5: am_james - Male
+    // SCENE 5 — CTA [15.5-20s] Voice 5: am_james
     {
       duration: 4.5,
       tts: {
-        text: 'Keep showing up. That is the secret.',
+        text: 'Stop waiting to feel ready. Keep showing up. That is it.',
         voice: 'am_james'
       },
       layers: [
