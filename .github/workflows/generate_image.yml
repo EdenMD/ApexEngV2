@@ -27,7 +27,7 @@ jobs:
           pipe.safety_checker = None
 
           image = pipe(
-              "A nice looking women dressed as a queen",
+              "A cartoon of a Rocket",
               num_inference_steps=20,
               width=512,
               height=512,
