@@ -27,7 +27,7 @@ jobs:
           pipe.safety_checker = None
 
           image = pipe(
-              "A vast African savanna at golden hour, cinematic wide shot",
+              "A nice looking women dressed as a queen",
               num_inference_steps=20,
               width=512,
               height=512,
