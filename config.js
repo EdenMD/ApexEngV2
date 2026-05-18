@@ -1,4 +1,4 @@
-'use strict';
+and'use strict';
 /**
  * APEX Engine v2.0 — config.js
  *
@@ -54,8 +54,8 @@ module.exports = {
     title:   'Broke-To-Rich-Habits',
     format:  'portrait',
     fps:     30,
-    crf:     18,
-    preset:  'medium',
+    crf:     23,
+    preset:  'ultrafast',
     cleanup: true,
     postProcess: {
       grain:              true,
