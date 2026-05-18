@@ -1,13 +1,11 @@
 // config.js
-// Theme:
-// Nobody notices the hard work before the results
-// Viral short format for Facebook/Reels
-// Target: 18–21 seconds
-// 5 scenes / 4 voices
+// Theme: One day it will be the last time
+// Style: Bright emotional cinematic reel
+// Length: ~18–20 seconds
 
 module.exports = {
   output: {
-    title: 'Nobody_Notices_The_Work',
+    title: 'Love_Them_While_You_Can',
     format: 'portrait',
 
     width: 1080,
@@ -17,7 +15,7 @@ module.exports = {
     crf: 26,
     preset: 'ultrafast',
 
-    bgMusic: './assets/music/emotional_piano_dark.mp3',
+    bgMusic: './assets/music/emotional_soft.mp3',
     bgMusicVol: 0.12,
 
     cleanup: true,
@@ -25,7 +23,7 @@ module.exports = {
     postProcess: {
       grain: false,
       vignette: true,
-      vignetteStrength: 0.24
+      vignetteStrength: 0.18
     }
   },
 
@@ -41,34 +39,30 @@ module.exports = {
     // =====================================
     {
       tts: {
-        text: 'Nobody notices the hard work before the results.',
+        text: 'One day.',
         voice: 'bm_george',
-        pauseAfter: 0.12
+        pauseAfter: 0.35
       },
 
       layers: [
         {
-          type: 'background',
-          color: '#000000'
+          type: 'gradient',
+          colors: ['#1e3a8a', '#312e81', '#0f172a'],
+          animated: true
         },
 
         {
           type: 'text',
-          text: 'NOBODY\nNOTICES\nTHE HARD WORK.',
-          y: 700,
-          fontSize: 108,
-          lineHeight: 0.95,
+          text: 'ONE DAY...',
+          y: 900,
+          fontSize: 165,
           color: '#ffffff',
           fontWeight: '900',
           align: 'center',
-          animation: 'pop',
+          animation: 'fade',
 
           shadow: true,
-          shadowBlur: 28,
-
-          stroke: true,
-          strokeColor: '#000000',
-          strokeWidth: 6
+          shadowBlur: 30
         }
       ]
     },
@@ -78,44 +72,30 @@ module.exports = {
     // =====================================
     {
       tts: {
-        text: 'Nobody claps for the late nights. Or the failed attempts.',
+        text: 'It will be.',
         voice: 'am_michael',
-        pauseAfter: 0.10
+        pauseAfter: 0.25
       },
 
       layers: [
         {
           type: 'gradient',
-          colors: ['#120505', '#000000', '#1a0000']
-        },
-
-        {
-          type: 'chart',
-          chartType: 'bar',
-          x: 120,
-          y: 340,
-          width: 840,
-          height: 480,
-          animDur: 0.7,
-
-          data: [
-            { label: 'WORK', value: 100, color: '#ef4444' },
-            { label: 'PRAISE', value: 8, color: '#ffffff' }
-          ]
+          colors: ['#0f766e', '#164e63', '#082f49']
         },
 
         {
           type: 'text',
-          text: 'THEY ONLY SEE\nTHE FAILURES.',
-          y: 1220,
-          fontSize: 98,
-          lineHeight: 1.0,
+          text: 'IT WILL BE...',
+          y: 900,
+          fontSize: 145,
           color: '#ffffff',
           fontWeight: '900',
+          align: 'center',
           animation: 'slide-up',
 
-          shadow: true,
-          shadowBlur: 20
+          glow: true,
+          glowColor: '#67e8f9',
+          glowBlur: 22
         }
       ]
     },
@@ -125,48 +105,30 @@ module.exports = {
     // =====================================
     {
       tts: {
-        text: 'But every day you continue... the progress keeps stacking.',
+        text: 'The last time.',
         voice: 'bf_isabella',
-        pauseAfter: 0.10
+        pauseAfter: 0.45
       },
 
       layers: [
         {
           type: 'gradient',
-          colors: ['#001018', '#000000', '#001a12']
-        },
-
-        {
-          type: 'chart',
-          chartType: 'line',
-          x: 110,
-          y: 350,
-          width: 860,
-          height: 500,
-          lineColor: '#22c55e',
-          lineWidth: 9,
-          animDur: 0.9,
-
-          data: [
-            { label: 'DAY1', value: 4 },
-            { label: 'MONTH', value: 18 },
-            { label: 'YEAR', value: 72 },
-            { label: 'RESULT', value: 100 }
-          ]
+          colors: ['#7c3aed', '#4338ca', '#1e1b4b']
         },
 
         {
           type: 'text',
-          text: 'PROGRESS\nSTACKS QUIETLY.',
-          y: 1220,
-          fontSize: 102,
-          lineHeight: 1.0,
+          text: 'THE LAST\nTIME.',
+          y: 820,
+          fontSize: 155,
+          lineHeight: 0.92,
           color: '#ffffff',
           fontWeight: '900',
-          animation: 'slide-left',
+          align: 'center',
+          animation: 'pop',
 
           shadow: true,
-          shadowBlur: 24
+          shadowBlur: 28
         }
       ]
     },
@@ -176,47 +138,39 @@ module.exports = {
     // =====================================
     {
       tts: {
-        text: 'Then one day... people call you lucky.',
+        text: 'Before it becomes a memory.',
         voice: 'am_adam',
-        pauseAfter: 0.15
+        pauseAfter: 0.35
       },
 
       layers: [
         {
-          type: 'background',
-          color: '#050505'
-        },
-
-        {
-          type: 'chart',
-          chartType: 'pie',
-          cx: 540,
-          cy: 620,
-          x: 540,
-          y: 620,
-          width: 480,
-          height: 480,
-          explode: true,
-
-          data: [
-            { label: 'WORK', value: 92, color: '#22c55e' },
-            { label: 'LUCK', value: 8, color: '#ef4444' }
-          ]
+          type: 'gradient',
+          colors: ['#0f172a', '#1e293b', '#334155']
         },
 
         {
           type: 'text',
-          text: 'THEY CALL IT\nLUCK.',
-          y: 1300,
-          fontSize: 124,
+          text: 'BEFORE IT\nBECOMES\nA MEMORY.',
+          y: 760,
+          fontSize: 118,
           lineHeight: 0.95,
           color: '#ffffff',
           fontWeight: '900',
-          animation: 'pop',
+          align: 'center',
+          animation: 'slide-left',
 
-          glow: true,
-          glowColor: '#22c55e',
-          glowBlur: 24
+          shadow: true,
+          shadowBlur: 24
+        },
+
+        {
+          type: 'divider',
+          y: 1450,
+          x1: 240,
+          x2: 840,
+          color: 'rgba(255,255,255,0.5)',
+          thickness: 6
         }
       ]
     },
@@ -226,41 +180,40 @@ module.exports = {
     // =====================================
     {
       tts: {
-        text: 'Keep working in silence. The results will speak for you.',
-        voice: 'bm_george',
-        pauseAfter: 0.25
+        text: 'Love them while you can.',
+        voice: 'bf_isabella',
+        pauseAfter: 0.65
       },
 
       layers: [
         {
-          type: 'background',
-          color: '#000000'
+          type: 'gradient',
+          colors: ['#2563eb', '#7c3aed', '#1d4ed8'],
+          animated: true
         },
 
         {
           type: 'text',
-          text: 'KEEP\nWORKING.',
-          y: 720,
-          fontSize: 150,
-          lineHeight: 0.9,
+          text: 'LOVE THEM\nWHILE YOU CAN.',
+          y: 760,
+          fontSize: 122,
+          lineHeight: 0.94,
           color: '#ffffff',
           fontWeight: '900',
-          animation: 'pop',
+          align: 'center',
+          animation: 'fade',
 
-          shadow: true,
-          shadowBlur: 30,
-
-          stroke: true,
-          strokeColor: '#111111',
-          strokeWidth: 6
+          glow: true,
+          glowColor: '#c4b5fd',
+          glowBlur: 26
         },
 
         {
           type: 'text',
-          text: 'THE RESULTS WILL SPEAK.',
-          y: 1220,
-          fontSize: 60,
-          color: '#22c55e',
+          text: 'TIME MOVES QUIETLY.',
+          y: 1370,
+          fontSize: 54,
+          color: '#dbeafe',
           fontWeight: 'bold',
           animation: 'slide-up'
         },
@@ -271,7 +224,8 @@ module.exports = {
           y: 1855,
           width: 972,
           height: 8,
-          color: '#22c55e'
+          color: '#c4b5fd',
+          color2: '#60a5fa'
         }
       ]
     }
