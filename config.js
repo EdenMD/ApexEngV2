@@ -1,6 +1,4 @@
-and'use strict';
-/**
- * APEX Engine v2.0 — config.js
+/**e v2.0 — config.js
  *
  * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  * "Habits Of People Who Went From Broke To Rich"
