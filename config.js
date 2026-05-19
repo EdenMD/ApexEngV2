@@ -1,108 +1,190 @@
 module.exports = {
   output: {
-    title: "Viral Choose One Delete One",
+    title: "Viral IQ Quiz Challenge",
     format: "portrait",
     fps: 30,
     width: 1080,
     height: 1920
   },
   defaults: {
-    voice: "am_adam", // Deep American male voice for authority
+    voice: "am_adam", 
     transition: "fade"
   },
   scenes: [
     {
       id: "intro",
       duration: 4,
-      tts: "Choose one option, the other disappears forever. What is your choice?",
+      tts: "Only people with an IQ over 120 can pass this 3-question brain test. Let's see if you are a genius.",
       layers: [
         {
           type: "background",
-          gradient: ["#0f2027", "#203a43", "#2c5364"]
+          gradient: ["#111827", "#312e81"]
         },
         {
           type: "text",
-          text: "CHOOSE ONE.\nDELETE ONE.",
+          text: "🧠 3-QUESTION\nIQ TEST",
+          color: "#ffff00",
+          fontSize: 85,
+          y: 700,
+          animation: "pop"
+        },
+        {
+          type: "text",
+          text: "Can you pass?",
           color: "#ffffff",
-          fontSize: 80,
-          y: 800,
+          fontSize: 50,
+          y: 1100
+        }
+      ]
+    },
+    {
+      id: "question_1",
+      duration: 6,
+      tts: "Question 1. What has keys but cannot open a single lock?",
+      layers: [
+        {
+          type: "background",
+          gradient: ["#1e1b4b", "#4338ca"]
+        },
+        {
+          type: "text",
+          text: "QUESTION 1/3",
+          color: "#6366f1",
+          fontSize: 45,
+          y: 400
+        },
+        {
+          type: "text",
+          text: "What has keys\nbut cannot open\na single lock?",
+          color: "#ffffff",
+          fontSize: 65,
+          y: 800
+        }
+      ]
+    },
+    {
+      id: "answer_1",
+      duration: 4,
+      tts: "The answer is a piano. Did you get it right?",
+      layers: [
+        {
+          type: "background",
+          gradient: ["#064e3b", "#059669"]
+        },
+        {
+          type: "text",
+          text: "ANSWER:",
+          color: "#10b981",
+          fontSize: 50,
+          y: 600
+        },
+        {
+          type: "text",
+          text: "🎹 A PIANO",
+          color: "#ffffff",
+          fontSize: 85,
+          y: 900,
           animation: "pop"
         }
       ]
     },
     {
-      id: "option_red",
-      duration: 5,
-      tts: "Option Red. You get ten million dollars cash right now, but you can never travel outside your home country again.",
+      id: "question_2",
+      duration: 6,
+      tts: "Question 2. If an electric train is traveling south, which way is the smoke blowing?",
       layers: [
         {
           type: "background",
-          gradient: ["#8a2387", "#e94057", "#f27121"]
+          gradient: ["#1e1b4b", "#4338ca"]
         },
         {
           type: "text",
-          text: "🔴 OPTION RED",
-          color: "#ffffff",
-          fontSize: 75,
-          y: 500
+          text: "QUESTION 2/3",
+          color: "#6366f1",
+          fontSize: 45,
+          y: 400
         },
         {
           type: "text",
-          text: "$10,000,000 Cash\n\nBUT:\nTrapped in your country.",
+          text: "If an electric train\nis traveling south,\nwhich way is the\nsmoke blowing?",
           color: "#ffffff",
-          fontSize: 55,
+          fontSize: 60,
+          y: 800
+        }
+      ]
+    },
+    {
+      id: "answer_2",
+      duration: 4,
+      tts: "Nowhere. Electric trains do not make smoke. Don't feel bad if that fooled you.",
+      layers: [
+        {
+          type: "background",
+          gradient: ["#064e3b", "#059669"]
+        },
+        {
+          type: "text",
+          text: "ANSWER:",
+          color: "#10b981",
+          fontSize: 50,
+          y: 600
+        },
+        {
+          type: "text",
+          text: "❌ NOWHERE\n(Electric trains\nhave no smoke)",
+          color: "#ffffff",
+          fontSize: 70,
           y: 900
         }
       ]
     },
     {
-      id: "option_blue",
-      duration: 5,
-      tts: "Option Blue. You gain absolute perfect physical health for the rest of your life, but you will always have exactly zero dollars in your bank account.",
+      id: "question_3",
+      duration: 6,
+      tts: "Question 3. I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?",
       layers: [
         {
           type: "background",
-          gradient: ["#00c6ff", "#0072ff"]
+          gradient: ["#1e1b4b", "#4338ca"]
         },
         {
           type: "text",
-          text: "🔵 OPTION BLUE",
-          color: "#ffffff",
-          fontSize: 75,
-          y: 500
+          text: "FINAL QUESTION",
+          color: "#6366f1",
+          fontSize: 45,
+          y: 400
         },
         {
           type: "text",
-          text: "Perfect Health Forever\n\nBUT:\nForever $0 Bank Account.",
+          text: "I speak without a mouth\nand hear without ears.\nWhat am I?",
           color: "#ffffff",
-          fontSize: 55,
-          y: 900
+          fontSize: 60,
+          y: 800
         }
       ]
     },
     {
       id: "outro",
-      duration: 4,
-      tts: "Which one are you deleting? Tell me your choice in the comments right now.",
+      duration: 5,
+      tts: "The final answer is an Echo. Drop your score in the comments below right now.",
       layers: [
         {
           type: "background",
-          gradient: ["#0f2027", "#203a43", "#2c5364"]
+          gradient: ["#111827", "#312e81"]
         },
         {
           type: "text",
-          text: "WHICH ONE\nARE YOU DELETING?",
-          color: "#ff007f",
-          fontSize: 75,
-          y: 700,
-          animation: "shake"
+          text: "ANSWER: AN ECHO",
+          color: "#ffff00",
+          fontSize: 65,
+          y: 600
         },
         {
           type: "text",
-          text: "👇 Comment below 👇",
+          text: "What was your score?\n👇 Comment Below 👇",
           color: "#ffffff",
-          fontSize: 50,
-          y: 1100
+          fontSize: 55,
+          y: 1000
         }
       ]
     }
