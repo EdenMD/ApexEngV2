@@ -1,11 +1,9 @@
 // config.js
-// ~23 seconds
-// Theme:
-// Pressure creates strength
+// ~22–24 seconds
 
 module.exports = {
   output: {
-    title: 'Pressure_Creates_Strength',
+    title: 'Pressure_Creates_People',
     format: 'portrait',
 
     width: 1080,
@@ -13,12 +11,12 @@ module.exports = {
 
     fps: 30,
 
-    bgMusic: './assets/music/dark_pressure.mp3',
+    bgMusic: './assets/music/heavy_tension.mp3',
     bgMusicVol: 0.17,
 
     postProcess: {
       vignette: true,
-      vignetteStrength: 0.25
+      vignetteStrength: 0.24
     }
   },
 
@@ -34,7 +32,7 @@ module.exports = {
     // =========================
     {
       tts: {
-        text: 'Pressure does not break everyone.',
+        text: 'Pressure changes people.',
         voice: 'bm_george',
         pauseAfter: 0.15
       },
@@ -44,9 +42,9 @@ module.exports = {
 
         {
           type: 'text',
-          text: 'PRESSURE\nDOES NOT\nBREAK ALL.',
+          text: 'PRESSURE\nCHANGES\nPEOPLE.',
           y: 500,
-          fontSize: 130,
+          fontSize: 138,
           lineHeight: 0.92,
           color: '#ffffff',
           fontWeight: '900',
@@ -69,7 +67,7 @@ module.exports = {
     // =========================
     {
       tts: {
-        text: 'Some people collapse. Others adapt. Others become stronger.',
+        text: 'Some people break. Others discover who they really are.',
         voice: 'am_michael',
         pauseAfter: 0.15
       },
@@ -79,10 +77,10 @@ module.exports = {
 
         {
           type: 'text',
-          text: 'COLLAPSE.\nADAPT.\nEVOLVE.',
-          y: 450,
-          fontSize: 132,
-          lineHeight: 0.92,
+          text: 'SOME BREAK.\nSOME TRANSFORM.',
+          y: 360,
+          fontSize: 122,
+          lineHeight: 0.9,
           color: '#ffffff',
           fontWeight: '900',
           align: 'center',
@@ -91,9 +89,9 @@ module.exports = {
 
         {
           type: 'text',
-          text: 'PAIN CREATES DIFFERENCE.',
-          y: 1320,
-          fontSize: 78,
+          text: 'PAIN REVEALS CHARACTER.',
+          y: 1380,
+          fontSize: 70,
           color: '#ef4444',
           fontWeight: '900',
           align: 'center',
@@ -107,7 +105,7 @@ module.exports = {
     // =========================
     {
       tts: {
-        text: 'Pressure forces you to remove weakness.',
+        text: 'Every strong person was once forced to survive something difficult.',
         voice: 'bm_george',
         pauseAfter: 0.15
       },
@@ -117,9 +115,9 @@ module.exports = {
 
         {
           type: 'text',
-          text: 'WEAKNESS\nGETS REMOVED.',
-          y: 520,
-          fontSize: 138,
+          text: 'STRENGTH\nIS BUILT\nUNDER\nPRESSURE.',
+          y: 390,
+          fontSize: 122,
           lineHeight: 0.92,
           color: '#22c55e',
           fontWeight: '900',
@@ -140,11 +138,11 @@ module.exports = {
     },
 
     // =========================
-    // ENDING (FEMALE — ISABELLA ONLY HERE)
+    // ENDING (FEMALE — ISABELLA + CTA TTS)
     // =========================
     {
       tts: {
-        text: 'Let pressure shape you, not break you.',
+        text: 'Let pressure shape you, not break you. Follow for more.',
         voice: 'bf_isabella',
         pauseAfter: 0.25
       },
@@ -155,7 +153,7 @@ module.exports = {
         {
           type: 'text',
           text: 'LET IT\nSHAPE YOU.',
-          y: 500,
+          y: 520,
           fontSize: 150,
           lineHeight: 0.92,
           color: '#ffffff',
@@ -167,8 +165,8 @@ module.exports = {
         {
           type: 'text',
           text: 'NOT BREAK YOU.',
-          y: 1400,
-          fontSize: 84,
+          y: 1350,
+          fontSize: 86,
           color: '#22c55e',
           fontWeight: '900',
           align: 'center',
