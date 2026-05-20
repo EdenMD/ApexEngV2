@@ -1,28 +1,315 @@
-- name: Upload video to Litterbox
-  if: success()
-  id: litterbox
-  run: |
-    VIDEO_FILE=$(ls work/*.mp4 2>/dev/null | head -n 1)
-    if [ -z "$VIDEO_FILE" ]; then
-      echo "No MP4 found in work/ — skipping upload"
-      echo "uploaded=false" >> $GITHUB_OUTPUT
-      exit 0
-    fi
+# .github/workflows/generate-video.yml
+# APEX Video Engine v2.0 — GitHub Actions CI Workflow
 
-    echo "Uploading $VIDEO_FILE to Litterbox..."
-    RESPONSE=$(curl -s --max-time 60 \
-      -F "reqtype=fileupload" \
-      -F "time=72h" \
-      -F "fileToUpload=@${VIDEO_FILE}" \
-      https://litterbox.catbox.moe/resources/internals/api.php) || true   # ← don't die on curl error
+name: Generate Video
 
-    if echo "$RESPONSE" | grep -q "^https://"; then
-      echo "✅ Litterbox upload successful!"
-      echo "url=$RESPONSE" >> $GITHUB_OUTPUT
-      echo "uploaded=true" >> $GITHUB_OUTPUT
-      echo "📹 VIDEO DOWNLOAD URL (expires in 72h):"
-      echo "$RESPONSE"
-    else
-      echo "⚠️  Litterbox failed (response: '$RESPONSE')"
-      echo "uploaded=false" >> $GITHUB_OUTPUT
-    fi
+on:
+  workflow_dispatch:
+    inputs:
+      config:
+        description: 'Config file name (must exist in repo root)'
+        required: false
+        default: 'config.js'
+  push:
+    branches: [main]
+    paths:
+      - 'config.js'
+      - 'engine-ci.js'
+      - 'src/**'
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+
+    steps:
+
+      # ── 1. Checkout ──────────────────────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ── 2. System deps ───────────────────────────────────────────────────
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends \
+            ffmpeg \
+            libcairo2-dev \
+            libpango1.0-dev \
+            libjpeg-dev \
+            libgif-dev \
+            librsvg2-dev \
+            build-essential \
+            pkg-config \
+            python3 \
+            python3-pip \
+            python3-dev \
+            espeak-ng \
+            espeak-ng-data \
+            libespeak-ng-dev \
+            libsndfile1 \
+            libsndfile1-dev \
+            jq
+
+      # ── 3. Cache pip packages ────────────────────────────────────────────
+      - name: Cache Python packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: kokoro-pip-${{ runner.os }}-v5
+
+      # ── 4. Install Kokoro TTS ────────────────────────────────────────────
+      - name: Install Kokoro TTS dependencies
+        run: |
+          pip3 install --quiet --upgrade pip
+          pip3 install --quiet numpy soundfile
+          pip3 install --quiet "misaki[en]"
+          pip3 install --quiet "kokoro>=0.9.4"
+          echo "--- Verifying Kokoro install ---"
+          python3 -c "from kokoro import KPipeline; print('Kokoro OK')"
+
+      # ── 5. Node.js ───────────────────────────────────────────────────────
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # ── 6. Ensure package.json ───────────────────────────────────────────
+      - name: Ensure package.json exists
+        run: |
+          if [ ! -f package.json ]; then
+            echo '{"name":"apex-videogen","version":"2.0.0","private":true}' > package.json
+          fi
+
+      # ── 7. Cache node_modules ────────────────────────────────────────────
+      - name: Cache node modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-canvas-v3-${{ hashFiles('package.json') }}
+
+      # ── 8. Install Node deps ─────────────────────────────────────────────
+      - name: Install Node dependencies
+        run: |
+          npm install --save canvas fluent-ffmpeg fs-extra omggif
+        env:
+          npm_config_build_from_source: true
+
+      # ── 9. Cache Kokoro model weights ────────────────────────────────────
+      - name: Cache Kokoro model weights
+        uses: actions/cache@v4
+        with:
+          path: kokoro
+          key: kokoro-model-v2
+
+      # ── 10. Prepare work dirs ────────────────────────────────────────────
+      - name: Prepare work directories
+        run: mkdir -p work/tts
+
+      # ── 11. Run engine ───────────────────────────────────────────────────
+      - name: Generate video
+        run: node engine-ci.js
+        env:
+          VIDEO_CONFIG: ${{ github.event.inputs.config || 'config.js' }}
+          NODE_OPTIONS: '--max-old-space-size=6144'
+        timeout-minutes: 45
+
+      # ── 12. Upload video — 6 platforms tried in sequence ─────────────────
+      #
+      #  All curl calls use || true so an SSL/network error never kills the
+      #  step mid-script. A single UPLOADED flag gates each attempt so we
+      #  stop the moment one succeeds and avoid wasting runner time.
+      #
+      #  Platform summary:
+      #   1. Litterbox  — 1 GB cap, 72 h expiry, direct MP4 URL
+      #   2. GoFile     — no size cap, no expiry, download-page URL
+      #   3. transfer.sh— 10 GB cap, 14-day expiry, direct URL
+      #   4. oshi.at    — 25 GB cap, ~90-day expiry, direct URL
+      #   5. Filebin    — no cap, ~6-day idle expiry, direct URL
+      #   6. Catbox     — 200 MB cap, permanent, direct URL (small vids only)
+      #
+      - name: Upload video (6-platform fallback chain)
+        if: success()
+        run: |
+          # ── helpers ───────────────────────────────────────────
+          divider() { echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; }
+
+          announce_success() {
+            local platform="$1" url="$2" note="$3"
+            divider
+            echo "✅ Upload successful!"
+            echo "🔗 Platform : $platform"
+            echo "⏱  Expiry   : $note"
+            echo "📹 URL      : $url"
+            divider
+          }
+
+          # ── locate video ──────────────────────────────────────
+          VIDEO_FILE=$(ls work/*.mp4 2>/dev/null | head -n 1)
+          if [ -z "$VIDEO_FILE" ]; then
+            echo "❌ No MP4 found in work/ — nothing to upload"
+            exit 1
+          fi
+          FILENAME=$(basename "$VIDEO_FILE")
+          echo "🎬 File to upload: $VIDEO_FILE ($(du -sh "$VIDEO_FILE" | cut -f1))"
+
+          UPLOADED=false
+
+          # ════════════════════════════════════════════════════════
+          # HOST 1 — Litterbox  (catbox.moe)
+          #   Limit : 1 GB   Expiry : 72 h   Auth : none
+          # ════════════════════════════════════════════════════════
+          echo ""
+          echo "📤 [1/6] Litterbox..."
+          RESPONSE=$(curl -s --max-time 180 --retry 2 --retry-delay 4 \
+            -F "reqtype=fileupload" \
+            -F "time=72h" \
+            -F "fileToUpload=@${VIDEO_FILE}" \
+            https://litterbox.catbox.moe/resources/internals/api.php) || true
+
+          if echo "$RESPONSE" | grep -q "^https://"; then
+            announce_success "Litterbox (catbox.moe)" "$RESPONSE" "72 hours"
+            UPLOADED=true
+          else
+            echo "   ⚠️  Failed — ${RESPONSE:-'no response / SSL error'}"
+          fi
+
+          # ════════════════════════════════════════════════════════
+          # HOST 2 — GoFile
+          #   Limit : none   Expiry : none (until deleted)   Auth : none
+          # ════════════════════════════════════════════════════════
+          if [ "$UPLOADED" = "false" ]; then
+            echo ""
+            echo "📤 [2/6] GoFile..."
+            SERVER=$(curl -s --max-time 15 --retry 2 \
+              https://api.gofile.io/servers \
+              | jq -r '.data.servers[0].name' 2>/dev/null) || true
+
+            if [ -n "$SERVER" ] && [ "$SERVER" != "null" ]; then
+              RESPONSE=$(curl -s --max-time 300 \
+                -F "file=@${VIDEO_FILE}" \
+                "https://${SERVER}.gofile.io/uploadFile") || true
+
+              STATUS=$(echo "$RESPONSE" | jq -r '.status' 2>/dev/null)
+              if [ "$STATUS" = "ok" ]; then
+                LINK=$(echo "$RESPONSE" | jq -r '.data.downloadPage')
+                announce_success "GoFile" "$LINK" "No expiry"
+                UPLOADED=true
+              else
+                echo "   ⚠️  Upload failed — $RESPONSE"
+              fi
+            else
+              echo "   ⚠️  Could not resolve GoFile server"
+            fi
+          fi
+
+          # ════════════════════════════════════════════════════════
+          # HOST 3 — transfer.sh
+          #   Limit : 10 GB   Expiry : 14 days   Auth : none
+          # ════════════════════════════════════════════════════════
+          if [ "$UPLOADED" = "false" ]; then
+            echo ""
+            echo "📤 [3/6] transfer.sh..."
+            RESPONSE=$(curl -s --max-time 300 --retry 1 \
+              --upload-file "$VIDEO_FILE" \
+              "https://transfer.sh/${FILENAME}") || true
+
+            if echo "$RESPONSE" | grep -q "^https://"; then
+              announce_success "transfer.sh" "$RESPONSE" "14 days"
+              UPLOADED=true
+            else
+              echo "   ⚠️  Failed — ${RESPONSE:-'no response'}"
+            fi
+          fi
+
+          # ════════════════════════════════════════════════════════
+          # HOST 4 — oshi.at
+          #   Limit : 25 GB   Expiry : ~90 days   Auth : none
+          #   Response is plain text with "DL: <url>" line
+          # ════════════════════════════════════════════════════════
+          if [ "$UPLOADED" = "false" ]; then
+            echo ""
+            echo "📤 [4/6] oshi.at..."
+            RESPONSE=$(curl -s --max-time 300 --retry 1 \
+              -F "f=@${VIDEO_FILE}" \
+              https://oshi.at) || true
+
+            LINK=$(echo "$RESPONSE" | grep -oP "(?<=DL: )https://\S+" | head -n 1) || true
+            if [ -n "$LINK" ]; then
+              announce_success "oshi.at" "$LINK" "~90 days"
+              UPLOADED=true
+            else
+              echo "   ⚠️  Failed — ${RESPONSE:-'no response'}"
+            fi
+          fi
+
+          # ════════════════════════════════════════════════════════
+          # HOST 5 — Filebin
+          #   Limit : none   Expiry : ~6 days after last access   Auth : none
+          #   PUT to a random bucket; response is JSON with .file.filename
+          # ════════════════════════════════════════════════════════
+          if [ "$UPLOADED" = "false" ]; then
+            echo ""
+            echo "📤 [5/6] Filebin..."
+            BUCKET="apex-$(date +%s)-$$"
+            RESPONSE=$(curl -s --max-time 300 \
+              -X POST \
+              -H "filename: ${FILENAME}" \
+              -H "bin: ${BUCKET}" \
+              --data-binary "@${VIDEO_FILE}" \
+              "https://filebin.net/${BUCKET}/${FILENAME}") || true
+
+            FNAME=$(echo "$RESPONSE" | jq -r '.file.filename' 2>/dev/null)
+            if [ -n "$FNAME" ] && [ "$FNAME" != "null" ]; then
+              LINK="https://filebin.net/${BUCKET}/${FILENAME}"
+              announce_success "Filebin" "$LINK" "~6 days idle expiry"
+              UPLOADED=true
+            else
+              echo "   ⚠️  Failed — ${RESPONSE:-'no response'}"
+            fi
+          fi
+
+          # ════════════════════════════════════════════════════════
+          # HOST 6 — Catbox  (permanent, but 200 MB cap — last resort)
+          #   Limit : 200 MB   Expiry : permanent   Auth : none
+          # ════════════════════════════════════════════════════════
+          if [ "$UPLOADED" = "false" ]; then
+            echo ""
+            echo "📤 [6/6] Catbox (200 MB cap — last resort)..."
+            FILESIZE=$(stat -c%s "$VIDEO_FILE")
+            MAX_CATBOX=$((200 * 1024 * 1024))
+
+            if [ "$FILESIZE" -gt "$MAX_CATBOX" ]; then
+              echo "   ⚠️  File is $(du -sh "$VIDEO_FILE" | cut -f1)) — exceeds Catbox 200 MB limit, skipping"
+            else
+              RESPONSE=$(curl -s --max-time 180 --retry 2 \
+                -F "reqtype=fileupload" \
+                -F "fileToUpload=@${VIDEO_FILE}" \
+                https://catbox.moe/user/api.php) || true
+
+              if echo "$RESPONSE" | grep -q "^https://"; then
+                announce_success "Catbox (permanent)" "$RESPONSE" "Permanent"
+                UPLOADED=true
+              else
+                echo "   ⚠️  Failed — ${RESPONSE:-'no response'}"
+              fi
+            fi
+          fi
+
+          # ── final gate ────────────────────────────────────────
+          echo ""
+          if [ "$UPLOADED" = "false" ]; then
+            echo "❌ All 6 upload platforms failed. See warnings above."
+            echo "   The video is still available as a GitHub artifact if you add an upload-artifact step."
+            exit 1
+          fi
+
+      # ── 13. Upload debug logs on failure ─────────────────────────────────
+      - name: Upload debug logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-logs-${{ github.run_number }}
+          path: work/tts/
+          retention-days: 3
+          if-no-files-found: ignore
