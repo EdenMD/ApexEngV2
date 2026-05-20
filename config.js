@@ -1,9 +1,11 @@
 // config.js
-// ~22–24 seconds
+// ~22 seconds
+// Theme:
+// Comfort is destroying your future.
 
 module.exports = {
   output: {
-    title: 'Pressure_Creates_People',
+    title: 'Comfort_Is_Destroying_You',
     format: 'portrait',
 
     width: 1080,
@@ -11,12 +13,12 @@ module.exports = {
 
     fps: 30,
 
-    bgMusic: './assets/music/heavy_tension.mp3',
+    bgMusic: './assets/music/dark_cinematic.mp3',
     bgMusicVol: 0.17,
 
     postProcess: {
       vignette: true,
-      vignetteStrength: 0.24
+      vignetteStrength: 0.25
     }
   },
 
@@ -32,9 +34,9 @@ module.exports = {
     // =========================
     {
       tts: {
-        text: 'Pressure changes people.',
+        text: 'Comfort is slowly destroying your future.',
         voice: 'bm_george',
-        pauseAfter: 0.15
+        pauseAfter: 0.2
       },
 
       layers: [
@@ -42,10 +44,10 @@ module.exports = {
 
         {
           type: 'text',
-          text: 'PRESSURE\nCHANGES\nPEOPLE.',
-          y: 500,
-          fontSize: 138,
-          lineHeight: 0.92,
+          text: 'COMFORT\nIS DESTROYING\nYOUR FUTURE.',
+          y: 470,
+          fontSize: 122,
+          lineHeight: 0.95,
           color: '#ffffff',
           fontWeight: '900',
           align: 'center',
@@ -54,10 +56,20 @@ module.exports = {
 
         {
           type: 'divider',
-          y: 1360,
+          y: 1340,
           width: 420,
           thickness: 8,
           color: '#ef4444'
+        },
+
+        {
+          type: 'text',
+          text: 'SLOWLY.',
+          y: 1480,
+          fontSize: 64,
+          color: '#ef4444',
+          fontWeight: '900',
+          animation: 'pulse'
         }
       ]
     },
@@ -67,7 +79,7 @@ module.exports = {
     // =========================
     {
       tts: {
-        text: 'Some people break. Others discover who they really are.',
+        text: 'The bed feels safe. The excuses feel safe. Staying average feels safe.',
         voice: 'am_michael',
         pauseAfter: 0.15
       },
@@ -77,35 +89,35 @@ module.exports = {
 
         {
           type: 'text',
-          text: 'SOME BREAK.\nSOME TRANSFORM.',
-          y: 360,
-          fontSize: 122,
+          text: 'SAFE.\nSAFE.\nSAFE.',
+          y: 400,
+          fontSize: 148,
           lineHeight: 0.9,
           color: '#ffffff',
           fontWeight: '900',
           align: 'center',
-          animation: 'slide-left'
+          animation: 'slide-up'
         },
 
         {
           type: 'text',
-          text: 'PAIN REVEALS CHARACTER.',
-          y: 1380,
-          fontSize: 70,
+          text: 'BUT NOTHING CHANGES.',
+          y: 1180,
+          fontSize: 86,
           color: '#ef4444',
           fontWeight: '900',
           align: 'center',
-          animation: 'pulse'
+          animation: 'slide-left'
         }
       ]
     },
 
     // =========================
-    // TRANSFORMATION (MALE)
+    // SHIFT (MALE)
     // =========================
     {
       tts: {
-        text: 'Every strong person was once forced to survive something difficult.',
+        text: 'Growth starts the moment your comfort ends.',
         voice: 'bm_george',
         pauseAfter: 0.15
       },
@@ -115,34 +127,24 @@ module.exports = {
 
         {
           type: 'text',
-          text: 'STRENGTH\nIS BUILT\nUNDER\nPRESSURE.',
-          y: 390,
-          fontSize: 122,
-          lineHeight: 0.92,
+          text: 'GROWTH\nSTARTS\nWHEN COMFORT\nENDS.',
+          y: 420,
+          fontSize: 118,
+          lineHeight: 0.95,
           color: '#22c55e',
           fontWeight: '900',
           align: 'center',
           animation: 'slide-up'
-        },
-
-        {
-          type: 'waveform',
-          vizStyle: 'bars',
-          x: 70,
-          y: 1690,
-          width: 940,
-          height: 60,
-          color: '#22c55e'
         }
       ]
     },
 
     // =========================
-    // ENDING (FEMALE — ISABELLA + CTA TTS)
+    // ENDING (ISABELLA + CTA)
     // =========================
     {
       tts: {
-        text: 'Let pressure shape you, not break you. Follow for more.',
+        text: 'Stop choosing comfort over your future. Follow for more.',
         voice: 'bf_isabella',
         pauseAfter: 0.25
       },
@@ -152,10 +154,10 @@ module.exports = {
 
         {
           type: 'text',
-          text: 'LET IT\nSHAPE YOU.',
-          y: 520,
-          fontSize: 150,
-          lineHeight: 0.92,
+          text: 'YOUR FUTURE\nIS HIDING\nBEHIND\nDISCOMFORT.',
+          y: 420,
+          fontSize: 112,
+          lineHeight: 0.95,
           color: '#ffffff',
           fontWeight: '900',
           align: 'center',
@@ -164,12 +166,11 @@ module.exports = {
 
         {
           type: 'text',
-          text: 'NOT BREAK YOU.',
-          y: 1350,
-          fontSize: 86,
+          text: 'STOP AVOIDING IT.',
+          y: 1370,
+          fontSize: 82,
           color: '#22c55e',
           fontWeight: '900',
-          align: 'center',
           animation: 'slide-up'
         },
 
