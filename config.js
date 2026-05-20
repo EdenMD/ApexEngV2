@@ -13,7 +13,7 @@ module.exports = {
         format:     'portrait',
         fps:        30,
         crf:        23,          // Good quality
-        preset:     'ultrafast',    // Moderate speed and quality
+        preset:     'medium',    // Moderate speed and quality
         bgMusic:    null,        // Placeholder for tense, low-key background music
         bgMusicVol: 0.12,
         cleanup:    true,
@@ -33,13 +33,13 @@ module.exports = {
 
     scenes: [
         //----start of SCENE_HOOK_DIGITAL_FOOTPRINT----
-        // SCENE 1: HOOK - DIGITAL FOOTPRINT (5 sec)
+// SCENE 1: HOOK - DIGITAL FOOTPRINT (5 sec)
         // Poses the unsettling question about TikTok's data collection.
         {
             tts: {
-                text: 'Think your data is safe? TikTok harvests more than you imagine. Uncover your hidden digital footprint.',
+                text: 'Every tap, every secret. TikTok is logging your digital life. What if you knew exactly what they took?',
                 voice: 'bm_george',
-                pauseAfter: 0.5,
+                pauseAfter: 0.2,
             },
             transition: 'zoom-in',
             transitionDuration: 0.7,
@@ -57,9 +57,10 @@ module.exports = {
                     spacing: 3,
                     opacity: 0.2
                 },
+                // First scary hook point
                 {
                     type:      'text',
-                    text:      'YOUR DIGITAL\nSHADOW',
+                    text:      'THEY\'RE WATCHING.',
                     x: 540, y: 700,
                     fontSize:  100,
                     fontFamily: 'Impact, Arial Black, sans-serif',
@@ -73,20 +74,23 @@ module.exports = {
                     shadowColor: 'rgba(0,0,0,0.9)',
                     shadowBlur: 40,
                     animation: 'pop',
-                    animDur:   0.6,
+                    animDur:   0.4,
                     startT:    0.1,
+                    exitAt:    2.0, // Exit quickly for the next point
+                    exitDur:   0.3
                 },
+                // Second scary hook point, rotating in
                 {
                     type:      'text',
-                    text:      'TikTok\'s Secret Harvest Exposed',
-                    x: 540, y: 950,
-                    fontSize:  48,
+                    text:      'YOUR PRIVATE DATA?',
+                    x: 540, y: 850,
+                    fontSize:  60,
                     color:     '#E0E0E0',
                     align:     'center',
                     maxWidth:  900,
-                    animation: 'fade',
-                    animDur:   0.5,
-                    startT:    0.6,
+                    animation: 'slide-up', // Slide up after first text exits
+                    animDur:   0.4,
+                    startT:    2.2,
                 },
                 {
                     type:        'progress-bar',
@@ -100,14 +104,14 @@ module.exports = {
                 },
             ],
         },
-        //----end of SCENE_HOOK_DIGITAL_FOOTPRINT----
+//----end of SCENE_HOOK_DIGITAL_FOOTPRINT----
 
         //----start of SCENE_CLIPBOARD_DATA_REVEAL----
-        // SCENE 2: CLIPBOARD DATA REVEAL (6 sec)
+// SCENE 2: CLIPBOARD DATA REVEAL (6 sec)
         // Highlighting the alarming access to clipboard data with a visual.
         {
             tts: {
-                text: 'Public cybersecurity reports confirm TikTok accesses your clipboard. Every copy, every paste, potentially seen.',
+                text: 'Cybersecurity reports confirm TikTok accesses your clipboard. Passwords, private messages, bank details. Anything you copy.',
                 voice: 'bm_george',
                 pauseAfter: 0.4,
             },
@@ -124,7 +128,7 @@ module.exports = {
                 },
                 {
                     type:      'text',
-                    text:      'CLIPBOARD\nACCESS',
+                    text:      'CLIPBOARD\nINVASION',
                     x: 540, y: 300,
                     fontSize:  85,
                     fontFamily: 'Impact, Arial Black, sans-serif',
@@ -148,19 +152,17 @@ module.exports = {
                     width: 880, height: 400,
                     animDur: 1.2,
                     data: [
-                        { label: 'Text', value: 95, color: '#A020F0' },
-                        { label: 'Links', value: 80, color: '#E0BBE4' },
-                        { label: 'Passwords', value: 60, color: '#6A057A' } // Conceptual, higher represents higher risk
+                        { label: 'Passwords', value: 95, color: '#A020F0' },
+                        { label: 'Bank Details', value: 80, color: '#E0BBE4' },
+                        { label: 'Private Chats', value: 70, color: '#6A057A' }
                     ],
-                    // A conceptual "percentage" of privacy risk or commonality
-                    // This is for visual representation, not actual data figures
                     labelFontColor: '#E0BBE4',
                     valueFontColor: '#FFFFFF',
                     gridColor: 'rgba(255,255,255,0.1)'
                 },
                 {
                     type:      'text',
-                    text:      'Passcodes. Sensitive info. Links.',
+                    text:      'Every copy. Every paste. EXPOSED.',
                     x: 540, y: 980,
                     fontSize:  42,
                     color:     '#E0BBE4',
@@ -193,14 +195,14 @@ module.exports = {
                 },
             ],
         },
-        //----end of SCENE_CLIPBOARD_DATA_REVEAL----
+//----end of SCENE_CLIPBOARD_DATA_REVEAL----
 
         //----start of SCENE_KEYSTROKE_AND_MORE----
-        // SCENE 3: KEYSTROKE PATTERNS & MORE (7 sec)
-        // Expanding on other types of data collection.
+// SCENE 3: KEYSTROKE PATTERNS & MORE (7 sec)
+        // Expanding on other types of data collection, emphasizing surveillance.
         {
             tts: {
-                text: 'Beyond the clipboard, TikTok may analyze keystroke patterns, app usage, network activity, and device identifiers.',
+                text: 'It goes deeper. Keystroke patterns, every app you open, your precise location. Your phone is a hidden surveillance device.',
                 voice: 'bm_george',
                 pauseAfter: 0.4,
             },
@@ -218,7 +220,7 @@ module.exports = {
                 },
                 {
                     type: 'shape',
-                    shape: 'triangle',
+                    shape: 'triangle', // Warning symbol
                     x: 540, y: 600,
                     width: 700, height: 600,
                     color: 'rgba(80, 0, 0, 0.3)',
@@ -232,7 +234,7 @@ module.exports = {
                 },
                 {
                     type:      'text',
-                    text:      'KEYSTROKE\nPATTERNS',
+                    text:      'KEYSTROKE\nSURVEILLANCE',
                     x: 540, y: 500,
                     fontSize:  75,
                     fontFamily: 'Impact, Arial Black, sans-serif',
@@ -251,7 +253,7 @@ module.exports = {
                 },
                 {
                     type:      'text',
-                    text:      'App Usage | Network Activity\nDevice Identifiers | Location Data',
+                    text:      'EVERY KEY PRESS | APP USAGE LOGS\nPRECISE LOCATION | DEVICE FINGERPRINT',
                     x: 540, y: 800,
                     fontSize:  38,
                     color:     '#FFA07A',
@@ -274,7 +276,7 @@ module.exports = {
                 },
             ],
         },
-        //----end of SCENE_KEYSTROKE_AND_MORE----
+//----end of SCENE_KEYSTROKE_AND_MORE----
 
         //----start of SCENE_CONCLUSION_CALL_TO_AWARENESS----
         // SCENE 4: CONCLUSION & CALL TO AWARENESS (6 sec)
