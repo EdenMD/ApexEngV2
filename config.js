@@ -1,9 +1,11 @@
 // config.js
-// ~22 seconds
+// ~23 seconds
+// Theme:
+// Pressure creates strength
 
 module.exports = {
   output: {
-    title: 'Silent_Competition',
+    title: 'Pressure_Creates_Strength',
     format: 'portrait',
 
     width: 1080,
@@ -11,7 +13,7 @@ module.exports = {
 
     fps: 30,
 
-    bgMusic: './assets/music/cold_dark.mp3',
+    bgMusic: './assets/music/dark_pressure.mp3',
     bgMusicVol: 0.17,
 
     postProcess: {
@@ -27,25 +29,25 @@ module.exports = {
 
   scenes: [
 
+    // =========================
+    // HOOK (MALE)
+    // =========================
     {
       tts: {
-        text: 'Someone your age is already living the life you keep dreaming about.',
+        text: 'Pressure does not break everyone.',
         voice: 'bm_george',
         pauseAfter: 0.15
       },
 
       layers: [
-        {
-          type: 'background',
-          color: '#000000'
-        },
+        { type: 'background', color: '#000000' },
 
         {
           type: 'text',
-          text: 'SOMEONE\nYOUR AGE\nIS ALREADY\nWINNING.',
-          y: 400,
-          fontSize: 118,
-          lineHeight: 0.93,
+          text: 'PRESSURE\nDOES NOT\nBREAK ALL.',
+          y: 500,
+          fontSize: 130,
+          lineHeight: 0.92,
           color: '#ffffff',
           fontWeight: '900',
           align: 'center',
@@ -54,7 +56,7 @@ module.exports = {
 
         {
           type: 'divider',
-          y: 1390,
+          y: 1360,
           width: 420,
           thickness: 8,
           color: '#ef4444'
@@ -62,23 +64,23 @@ module.exports = {
       ]
     },
 
+    // =========================
+    // REALITY (MALE)
+    // =========================
     {
       tts: {
-        text: 'Not because they are special. Not because they are lucky.',
-        voice: 'af_sarah',
+        text: 'Some people collapse. Others adapt. Others become stronger.',
+        voice: 'am_michael',
         pauseAfter: 0.15
       },
 
       layers: [
-        {
-          type: 'gradient',
-          colors: ['#000000', '#111827']
-        },
+        { type: 'gradient', colors: ['#000000', '#111827'] },
 
         {
           type: 'text',
-          text: 'NOT\nLUCK.\nNOT MAGIC.',
-          y: 430,
+          text: 'COLLAPSE.\nADAPT.\nEVOLVE.',
+          y: 450,
           fontSize: 132,
           lineHeight: 0.92,
           color: '#ffffff',
@@ -89,9 +91,9 @@ module.exports = {
 
         {
           type: 'text',
-          text: 'THEY JUST STARTED EARLIER.',
-          y: 1280,
-          fontSize: 76,
+          text: 'PAIN CREATES DIFFERENCE.',
+          y: 1320,
+          fontSize: 78,
           color: '#ef4444',
           fontWeight: '900',
           align: 'center',
@@ -100,25 +102,25 @@ module.exports = {
       ]
     },
 
+    // =========================
+    // TRANSFORMATION (MALE)
+    // =========================
     {
       tts: {
-        text: 'Every extra day you wait makes the gap bigger.',
-        voice: 'am_michael',
+        text: 'Pressure forces you to remove weakness.',
+        voice: 'bm_george',
         pauseAfter: 0.15
       },
 
       layers: [
-        {
-          type: 'background',
-          color: '#050505'
-        },
+        { type: 'background', color: '#050505' },
 
         {
           type: 'text',
-          text: 'THE GAP\nGETS\nBIGGER.',
-          y: 470,
-          fontSize: 145,
-          lineHeight: 0.9,
+          text: 'WEAKNESS\nGETS REMOVED.',
+          y: 520,
+          fontSize: 138,
+          lineHeight: 0.92,
           color: '#22c55e',
           fontWeight: '900',
           align: 'center',
@@ -129,7 +131,7 @@ module.exports = {
           type: 'waveform',
           vizStyle: 'bars',
           x: 70,
-          y: 1680,
+          y: 1690,
           width: 940,
           height: 60,
           color: '#22c55e'
@@ -137,25 +139,25 @@ module.exports = {
       ]
     },
 
+    // =========================
+    // ENDING (FEMALE — ISABELLA ONLY HERE)
+    // =========================
     {
       tts: {
-        text: 'One year from now you will either thank yourself or regret staying comfortable.',
+        text: 'Let pressure shape you, not break you.',
         voice: 'bf_isabella',
         pauseAfter: 0.25
       },
 
       layers: [
-        {
-          type: 'background',
-          color: '#000000'
-        },
+        { type: 'background', color: '#000000' },
 
         {
           type: 'text',
-          text: 'START NOW.\nYOUR FUTURE\nIS WATCHING.',
-          y: 430,
-          fontSize: 114,
-          lineHeight: 0.95,
+          text: 'LET IT\nSHAPE YOU.',
+          y: 500,
+          fontSize: 150,
+          lineHeight: 0.92,
           color: '#ffffff',
           fontWeight: '900',
           align: 'center',
@@ -164,11 +166,12 @@ module.exports = {
 
         {
           type: 'text',
-          text: 'DO NOT STAY STUCK.',
-          y: 1420,
-          fontSize: 70,
+          text: 'NOT BREAK YOU.',
+          y: 1400,
+          fontSize: 84,
           color: '#22c55e',
           fontWeight: '900',
+          align: 'center',
           animation: 'slide-up'
         },
 
