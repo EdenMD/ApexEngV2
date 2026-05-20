@@ -1,12 +1,9 @@
 // config.js
-// Theme:
-// Comfort is destroying your future.
-// Built for retention + emotional escalation
 // ~22 seconds
 
 module.exports = {
   output: {
-    title: 'Comfort_Is_Destroying_You',
+    title: 'Pressure_Creates_People',
     format: 'portrait',
 
     width: 1080,
@@ -14,12 +11,12 @@ module.exports = {
 
     fps: 30,
 
-    bgMusic: './assets/music/dark_cinematic.mp3',
+    bgMusic: './assets/music/heavy_tension.mp3',
     bgMusicVol: 0.17,
 
     postProcess: {
       vignette: true,
-      vignetteStrength: 0.25
+      vignetteStrength: 0.24
     }
   },
 
@@ -30,15 +27,11 @@ module.exports = {
 
   scenes: [
 
-    // =====================================
-    // SCENE 1 — HOOK
-    // =====================================
-
     {
       tts: {
-        text: 'Comfort is slowly destroying your future.',
+        text: 'Pressure changes people.',
         voice: 'bm_george',
-        pauseAfter: 0.2
+        pauseAfter: 0.15
       },
 
       layers: [
@@ -49,10 +42,10 @@ module.exports = {
 
         {
           type: 'text',
-          text: 'COMFORT\nIS DESTROYING\nYOUR FUTURE.',
-          y: 470,
-          fontSize: 122,
-          lineHeight: 0.95,
+          text: 'PRESSURE\nCHANGES\nPEOPLE.',
+          y: 500,
+          fontSize: 138,
+          lineHeight: 0.92,
           color: '#ffffff',
           fontWeight: '900',
           align: 'center',
@@ -61,31 +54,17 @@ module.exports = {
 
         {
           type: 'divider',
-          y: 1340,
+          y: 1360,
           width: 420,
           thickness: 8,
           color: '#ef4444'
-        },
-
-        {
-          type: 'text',
-          text: 'SLOWLY.',
-          y: 1480,
-          fontSize: 64,
-          color: '#ef4444',
-          fontWeight: '900',
-          animation: 'pulse'
         }
       ]
     },
 
-    // =====================================
-    // SCENE 2 — REALIZATION
-    // =====================================
-
     {
       tts: {
-        text: 'The bed feels safe. The excuses feel safe. Staying average feels safe.',
+        text: 'Some people break. Others discover who they really are.',
         voice: 'af_sarah',
         pauseAfter: 0.15
       },
@@ -98,46 +77,32 @@ module.exports = {
 
         {
           type: 'text',
-          text: 'SAFE.\nSAFE.\nSAFE.',
-          y: 400,
-          fontSize: 148,
+          text: 'SOME\nBREAK.\nSOME\nTRANSFORM.',
+          y: 340,
+          fontSize: 118,
           lineHeight: 0.9,
           color: '#ffffff',
-          fontWeight: '900',
-          align: 'center',
-          animation: 'slide-up'
-        },
-
-        {
-          type: 'text',
-          text: 'BUT NOTHING CHANGES.',
-          y: 1180,
-          fontSize: 86,
-          color: '#ef4444',
           fontWeight: '900',
           align: 'center',
           animation: 'slide-left'
         },
 
         {
-          type: 'waveform',
-          vizStyle: 'bars',
-          x: 70,
-          y: 1710,
-          width: 940,
-          height: 60,
-          color: '#ef4444'
+          type: 'text',
+          text: 'PAIN REVEALS CHARACTER.',
+          y: 1380,
+          fontSize: 70,
+          color: '#ef4444',
+          fontWeight: '900',
+          align: 'center',
+          animation: 'pulse'
         }
       ]
     },
 
-    // =====================================
-    // SCENE 3 — SHIFT
-    // =====================================
-
     {
       tts: {
-        text: 'Growth starts the moment your comfort ends.',
+        text: 'Every strong person was once forced to survive something difficult.',
         voice: 'am_michael',
         pauseAfter: 0.15
       },
@@ -150,10 +115,10 @@ module.exports = {
 
         {
           type: 'text',
-          text: 'GROWTH\nSTARTS\nWHEN COMFORT\nENDS.',
-          y: 420,
-          fontSize: 118,
-          lineHeight: 0.95,
+          text: 'STRENGTH\nIS BUILT\nUNDER\nPRESSURE.',
+          y: 390,
+          fontSize: 122,
+          lineHeight: 0.92,
           color: '#22c55e',
           fontWeight: '900',
           align: 'center',
@@ -161,22 +126,20 @@ module.exports = {
         },
 
         {
-          type: 'divider',
-          y: 1410,
-          width: 420,
-          thickness: 8,
+          type: 'waveform',
+          vizStyle: 'bars',
+          x: 70,
+          y: 1690,
+          width: 940,
+          height: 60,
           color: '#22c55e'
         }
       ]
     },
 
-    // =====================================
-    // SCENE 4 — ENDING
-    // =====================================
-
     {
       tts: {
-        text: 'The life you want is hidden behind the things you keep avoiding.',
+        text: 'The hardest seasons of your life may create the strongest version of you.',
         voice: 'bf_isabella',
         pauseAfter: 0.25
       },
@@ -189,10 +152,10 @@ module.exports = {
 
         {
           type: 'text',
-          text: 'YOUR FUTURE\nIS HIDING\nBEHIND\nDISCOMFORT.',
-          y: 420,
-          fontSize: 112,
-          lineHeight: 0.95,
+          text: 'DO NOT\nFEAR\nPRESSURE.',
+          y: 450,
+          fontSize: 136,
+          lineHeight: 0.92,
           color: '#ffffff',
           fontWeight: '900',
           align: 'center',
@@ -201,9 +164,9 @@ module.exports = {
 
         {
           type: 'text',
-          text: 'STOP AVOIDING IT.',
-          y: 1370,
-          fontSize: 82,
+          text: 'IT MAY CREATE YOU.',
+          y: 1410,
+          fontSize: 72,
           color: '#22c55e',
           fontWeight: '900',
           animation: 'slide-up'
