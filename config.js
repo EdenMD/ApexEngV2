@@ -1,9 +1,9 @@
 // config.js
-// ~21 seconds
+// ~22 seconds
 
 module.exports = {
   output: {
-    title: 'Silence_Is_Power',
+    title: 'Silent_Competition',
     format: 'portrait',
 
     width: 1080,
@@ -11,12 +11,12 @@ module.exports = {
 
     fps: 30,
 
-    bgMusic: './assets/music/dark_minimal.mp3',
-    bgMusicVol: 0.16,
+    bgMusic: './assets/music/cold_dark.mp3',
+    bgMusicVol: 0.17,
 
     postProcess: {
       vignette: true,
-      vignetteStrength: 0.23
+      vignetteStrength: 0.25
     }
   },
 
@@ -29,7 +29,7 @@ module.exports = {
 
     {
       tts: {
-        text: 'Powerful people move differently.',
+        text: 'Someone your age is already living the life you keep dreaming about.',
         voice: 'bm_george',
         pauseAfter: 0.15
       },
@@ -42,9 +42,9 @@ module.exports = {
 
         {
           type: 'text',
-          text: 'POWERFUL\nPEOPLE\nMOVE\nDIFFERENTLY.',
+          text: 'SOMEONE\nYOUR AGE\nIS ALREADY\nWINNING.',
           y: 400,
-          fontSize: 116,
+          fontSize: 118,
           lineHeight: 0.93,
           color: '#ffffff',
           fontWeight: '900',
@@ -54,17 +54,17 @@ module.exports = {
 
         {
           type: 'divider',
-          y: 1400,
+          y: 1390,
           width: 420,
           thickness: 8,
-          color: '#3b82f6'
+          color: '#ef4444'
         }
       ]
     },
 
     {
       tts: {
-        text: 'They do not talk about every goal. They do not announce every move.',
+        text: 'Not because they are special. Not because they are lucky.',
         voice: 'af_sarah',
         pauseAfter: 0.15
       },
@@ -72,14 +72,14 @@ module.exports = {
       layers: [
         {
           type: 'gradient',
-          colors: ['#000000', '#0f172a']
+          colors: ['#000000', '#111827']
         },
 
         {
           type: 'text',
-          text: 'SILENT.\nFOCUSED.\nDANGEROUS.',
-          y: 410,
-          fontSize: 126,
+          text: 'NOT\nLUCK.\nNOT MAGIC.',
+          y: 430,
+          fontSize: 132,
           lineHeight: 0.92,
           color: '#ffffff',
           fontWeight: '900',
@@ -89,10 +89,10 @@ module.exports = {
 
         {
           type: 'text',
-          text: 'THEY LET RESULTS SPEAK.',
-          y: 1290,
-          fontSize: 74,
-          color: '#3b82f6',
+          text: 'THEY JUST STARTED EARLIER.',
+          y: 1280,
+          fontSize: 76,
+          color: '#ef4444',
           fontWeight: '900',
           align: 'center',
           animation: 'pulse'
@@ -102,7 +102,7 @@ module.exports = {
 
     {
       tts: {
-        text: 'Weak people seek attention. Focused people seek progress.',
+        text: 'Every extra day you wait makes the gap bigger.',
         voice: 'am_michael',
         pauseAfter: 0.15
       },
@@ -115,11 +115,11 @@ module.exports = {
 
         {
           type: 'text',
-          text: 'ATTENTION\nDOES NOT\nBUILD SUCCESS.',
-          y: 430,
-          fontSize: 112,
-          lineHeight: 0.95,
-          color: '#ef4444',
+          text: 'THE GAP\nGETS\nBIGGER.',
+          y: 470,
+          fontSize: 145,
+          lineHeight: 0.9,
+          color: '#22c55e',
           fontWeight: '900',
           align: 'center',
           animation: 'slide-up'
@@ -129,17 +129,17 @@ module.exports = {
           type: 'waveform',
           vizStyle: 'bars',
           x: 70,
-          y: 1690,
+          y: 1680,
           width: 940,
           height: 60,
-          color: '#ef4444'
+          color: '#22c55e'
         }
       ]
     },
 
     {
       tts: {
-        text: 'Move in silence until your results become impossible to ignore.',
+        text: 'One year from now you will either thank yourself or regret staying comfortable.',
         voice: 'bf_isabella',
         pauseAfter: 0.25
       },
@@ -152,10 +152,10 @@ module.exports = {
 
         {
           type: 'text',
-          text: 'MOVE IN\nSILENCE.',
-          y: 470,
-          fontSize: 146,
-          lineHeight: 0.92,
+          text: 'START NOW.\nYOUR FUTURE\nIS WATCHING.',
+          y: 430,
+          fontSize: 114,
+          lineHeight: 0.95,
           color: '#ffffff',
           fontWeight: '900',
           align: 'center',
@@ -164,8 +164,8 @@ module.exports = {
 
         {
           type: 'text',
-          text: 'LET THEM NOTICE LATER.',
-          y: 1400,
+          text: 'DO NOT STAY STUCK.',
+          y: 1420,
           fontSize: 70,
           color: '#22c55e',
           fontWeight: '900',
