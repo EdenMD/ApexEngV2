@@ -13,7 +13,7 @@ module.exports = {
         format:     'portrait',
         fps:        30,
         crf:        23,          // Good quality
-        preset:     'medium',    // Moderate speed and quality
+        preset:     'ultrafast',    // Moderate speed and quality
         bgMusic:    null,        // Placeholder for tense, low-key background music
         bgMusicVol: 0.12,
         cleanup:    true,
