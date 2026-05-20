@@ -114,26 +114,26 @@ jobs:
           NODE_OPTIONS: '--max-old-space-size=6144'
         timeout-minutes: 45
 
-      # ── 12. Upload video — 6 platforms tried in sequence ─────────────────
+      # ── 12. Upload video — 5 platforms tried in sequence ─────────────────
       #
-      #  All curl calls use || true so an SSL/network error never kills the
-      #  step mid-script. A single UPLOADED flag gates each attempt so we
-      #  stop the moment one succeeds and avoid wasting runner time.
+      #  GoFile is primary — dedicated upload infrastructure, no SSL issues,
+      #  no size cap. Litterbox removed entirely due to recurring timeouts.
       #
-      #  Platform summary:
-      #   1. Litterbox  — 1 GB cap, 72 h expiry, direct MP4 URL
-      #   2. GoFile     — no size cap, no expiry, download-page URL
-      #   3. transfer.sh— 10 GB cap, 14-day expiry, direct URL
-      #   4. oshi.at    — 25 GB cap, ~90-day expiry, direct URL
-      #   5. Filebin    — no cap, ~6-day idle expiry, direct URL
-      #   6. Catbox     — 200 MB cap, permanent, direct URL (small vids only)
+      #  Platform order:
+      #   1. GoFile      — no cap,    no expiry,    download-page URL
+      #   2. transfer.sh — 10 GB cap, 14-day expiry, direct URL
+      #   3. oshi.at     — 25 GB cap, ~90-day expiry, direct URL
+      #   4. Filebin     — no cap,    ~6-day idle expiry, direct URL
+      #   5. Catbox      — 200 MB cap, permanent, direct URL (small vids only)
       #
-      - name: Upload video (6-platform fallback chain)
+      #  curl stall detection: if transfer speed drops below 10 KB/s for
+      #  15 consecutive seconds the request is killed and next platform tried.
+      #  This prevents silent hangs from wasting runner minutes.
+      #
+      - name: Upload video (5-platform fallback chain)
         if: success()
         run: |
-          # ── helpers ───────────────────────────────────────────
           divider() { echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; }
-
           announce_success() {
             local platform="$1" url="$2" note="$3"
             divider
@@ -144,73 +144,61 @@ jobs:
             divider
           }
 
-          # ── locate video ──────────────────────────────────────
           VIDEO_FILE=$(ls work/*.mp4 2>/dev/null | head -n 1)
           if [ -z "$VIDEO_FILE" ]; then
             echo "❌ No MP4 found in work/ — nothing to upload"
             exit 1
           fi
           FILENAME=$(basename "$VIDEO_FILE")
-          echo "🎬 File to upload: $VIDEO_FILE ($(du -sh "$VIDEO_FILE" | cut -f1))"
+          FILESIZE=$(stat -c%s "$VIDEO_FILE")
+          echo "🎬 File: $VIDEO_FILE ($(du -sh "$VIDEO_FILE" | cut -f1))"
+
+          # Dynamic max-time: 60s base + 1s per 50 KB, capped at 300s
+          MAX_TIME=$(( 60 + FILESIZE / 51200 ))
+          [ "$MAX_TIME" -gt 300 ] && MAX_TIME=300
+          echo "⏱  Per-platform timeout: ${MAX_TIME}s"
+
+          # Shared curl flags:
+          #   --connect-timeout 8  : bail if server doesn't respond in 8s
+          #   --speed-limit 10240  : abort if speed < 10 KB/s ...
+          #   --speed-time 15      : ... for 15 consecutive seconds
+          CURL_FLAGS="--silent --connect-timeout 8 --speed-limit 10240 --speed-time 15 --max-time ${MAX_TIME} --retry 1 --retry-delay 3"
 
           UPLOADED=false
 
           # ════════════════════════════════════════════════════════
-          # HOST 1 — Litterbox  (catbox.moe)
-          #   Limit : 1 GB   Expiry : 72 h   Auth : none
+          # HOST 1 — GoFile  (no cap, no expiry)
           # ════════════════════════════════════════════════════════
           echo ""
-          echo "📤 [1/6] Litterbox..."
-          RESPONSE=$(curl -s --max-time 180 --retry 2 --retry-delay 4 \
-            -F "reqtype=fileupload" \
-            -F "time=72h" \
-            -F "fileToUpload=@${VIDEO_FILE}" \
-            https://litterbox.catbox.moe/resources/internals/api.php) || true
+          echo "📤 [1/5] GoFile..."
+          SERVER=$(curl --silent --connect-timeout 8 --max-time 15 \
+            https://api.gofile.io/servers \
+            | jq -r '.data.servers[0].name' 2>/dev/null) || true
 
-          if echo "$RESPONSE" | grep -q "^https://"; then
-            announce_success "Litterbox (catbox.moe)" "$RESPONSE" "72 hours"
-            UPLOADED=true
-          else
-            echo "   ⚠️  Failed — ${RESPONSE:-'no response / SSL error'}"
-          fi
+          if [ -n "$SERVER" ] && [ "$SERVER" != "null" ]; then
+            RESPONSE=$(curl $CURL_FLAGS \
+              -F "file=@${VIDEO_FILE}" \
+              "https://${SERVER}.gofile.io/uploadFile") || true
 
-          # ════════════════════════════════════════════════════════
-          # HOST 2 — GoFile
-          #   Limit : none   Expiry : none (until deleted)   Auth : none
-          # ════════════════════════════════════════════════════════
-          if [ "$UPLOADED" = "false" ]; then
-            echo ""
-            echo "📤 [2/6] GoFile..."
-            SERVER=$(curl -s --max-time 15 --retry 2 \
-              https://api.gofile.io/servers \
-              | jq -r '.data.servers[0].name' 2>/dev/null) || true
-
-            if [ -n "$SERVER" ] && [ "$SERVER" != "null" ]; then
-              RESPONSE=$(curl -s --max-time 300 \
-                -F "file=@${VIDEO_FILE}" \
-                "https://${SERVER}.gofile.io/uploadFile") || true
-
-              STATUS=$(echo "$RESPONSE" | jq -r '.status' 2>/dev/null)
-              if [ "$STATUS" = "ok" ]; then
-                LINK=$(echo "$RESPONSE" | jq -r '.data.downloadPage')
-                announce_success "GoFile" "$LINK" "No expiry"
-                UPLOADED=true
-              else
-                echo "   ⚠️  Upload failed — $RESPONSE"
-              fi
+            STATUS=$(echo "$RESPONSE" | jq -r '.status' 2>/dev/null)
+            if [ "$STATUS" = "ok" ]; then
+              LINK=$(echo "$RESPONSE" | jq -r '.data.downloadPage')
+              announce_success "GoFile" "$LINK" "No expiry"
+              UPLOADED=true
             else
-              echo "   ⚠️  Could not resolve GoFile server"
+              echo "   ⚠️  Failed — ${RESPONSE:-'no response'}"
             fi
+          else
+            echo "   ⚠️  Could not resolve GoFile server"
           fi
 
           # ════════════════════════════════════════════════════════
-          # HOST 3 — transfer.sh
-          #   Limit : 10 GB   Expiry : 14 days   Auth : none
+          # HOST 2 — transfer.sh  (10 GB cap, 14-day expiry)
           # ════════════════════════════════════════════════════════
           if [ "$UPLOADED" = "false" ]; then
             echo ""
-            echo "📤 [3/6] transfer.sh..."
-            RESPONSE=$(curl -s --max-time 300 --retry 1 \
+            echo "📤 [2/5] transfer.sh..."
+            RESPONSE=$(curl $CURL_FLAGS \
               --upload-file "$VIDEO_FILE" \
               "https://transfer.sh/${FILENAME}") || true
 
@@ -223,14 +211,12 @@ jobs:
           fi
 
           # ════════════════════════════════════════════════════════
-          # HOST 4 — oshi.at
-          #   Limit : 25 GB   Expiry : ~90 days   Auth : none
-          #   Response is plain text with "DL: <url>" line
+          # HOST 3 — oshi.at  (25 GB cap, ~90-day expiry)
           # ════════════════════════════════════════════════════════
           if [ "$UPLOADED" = "false" ]; then
             echo ""
-            echo "📤 [4/6] oshi.at..."
-            RESPONSE=$(curl -s --max-time 300 --retry 1 \
+            echo "📤 [3/5] oshi.at..."
+            RESPONSE=$(curl $CURL_FLAGS \
               -F "f=@${VIDEO_FILE}" \
               https://oshi.at) || true
 
@@ -244,15 +230,13 @@ jobs:
           fi
 
           # ════════════════════════════════════════════════════════
-          # HOST 5 — Filebin
-          #   Limit : none   Expiry : ~6 days after last access   Auth : none
-          #   PUT to a random bucket; response is JSON with .file.filename
+          # HOST 4 — Filebin  (no cap, ~6-day idle expiry)
           # ════════════════════════════════════════════════════════
           if [ "$UPLOADED" = "false" ]; then
             echo ""
-            echo "📤 [5/6] Filebin..."
+            echo "📤 [4/5] Filebin..."
             BUCKET="apex-$(date +%s)-$$"
-            RESPONSE=$(curl -s --max-time 300 \
+            RESPONSE=$(curl $CURL_FLAGS \
               -X POST \
               -H "filename: ${FILENAME}" \
               -H "bin: ${BUCKET}" \
@@ -261,8 +245,7 @@ jobs:
 
             FNAME=$(echo "$RESPONSE" | jq -r '.file.filename' 2>/dev/null)
             if [ -n "$FNAME" ] && [ "$FNAME" != "null" ]; then
-              LINK="https://filebin.net/${BUCKET}/${FILENAME}"
-              announce_success "Filebin" "$LINK" "~6 days idle expiry"
+              announce_success "Filebin" "https://filebin.net/${BUCKET}/${FILENAME}" "~6 days idle"
               UPLOADED=true
             else
               echo "   ⚠️  Failed — ${RESPONSE:-'no response'}"
@@ -270,25 +253,22 @@ jobs:
           fi
 
           # ════════════════════════════════════════════════════════
-          # HOST 6 — Catbox  (permanent, but 200 MB cap — last resort)
-          #   Limit : 200 MB   Expiry : permanent   Auth : none
+          # HOST 5 — Catbox  (200 MB cap, permanent)
           # ════════════════════════════════════════════════════════
           if [ "$UPLOADED" = "false" ]; then
             echo ""
-            echo "📤 [6/6] Catbox (200 MB cap — last resort)..."
-            FILESIZE=$(stat -c%s "$VIDEO_FILE")
+            echo "📤 [5/5] Catbox (200 MB cap — last resort)..."
             MAX_CATBOX=$((200 * 1024 * 1024))
-
             if [ "$FILESIZE" -gt "$MAX_CATBOX" ]; then
-              echo "   ⚠️  File is $(du -sh "$VIDEO_FILE" | cut -f1)) — exceeds Catbox 200 MB limit, skipping"
+              echo "   ⚠️  $(du -sh "$VIDEO_FILE" | cut -f1) exceeds 200 MB Catbox limit, skipping"
             else
-              RESPONSE=$(curl -s --max-time 180 --retry 2 \
+              RESPONSE=$(curl $CURL_FLAGS \
                 -F "reqtype=fileupload" \
                 -F "fileToUpload=@${VIDEO_FILE}" \
                 https://catbox.moe/user/api.php) || true
 
               if echo "$RESPONSE" | grep -q "^https://"; then
-                announce_success "Catbox (permanent)" "$RESPONSE" "Permanent"
+                announce_success "Catbox" "$RESPONSE" "Permanent"
                 UPLOADED=true
               else
                 echo "   ⚠️  Failed — ${RESPONSE:-'no response'}"
@@ -299,8 +279,7 @@ jobs:
           # ── final gate ────────────────────────────────────────
           echo ""
           if [ "$UPLOADED" = "false" ]; then
-            echo "❌ All 6 upload platforms failed. See warnings above."
-            echo "   The video is still available as a GitHub artifact if you add an upload-artifact step."
+            echo "❌ All 5 platforms failed. See warnings above."
             exit 1
           fi
 
