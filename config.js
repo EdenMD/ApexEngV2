@@ -1,96 +1,90 @@
 /**
- * TIKTOK DATA PRIVACY DOCUMENTARY CONFIG v2026
+ * WHATSAPP ACCOUNT HIJACK DOCUMENTARY CONFIG v2026
  *
- * A gripping data-driven look into TikTok's data collection,
- * focusing on digital footprints and cybersecurity concerns.
- *
- * Usage: VIDEO_CONFIG=config.js node engine-ci.js
+ * A deep, data-driven look into social engineering traps, automated 
+ * carrier verification loops, and the black market for stolen accounts.
  */
-
 module.exports = {
     output: {
-        title:      'TikTok-Data-Privacy-Exposed',
+        title:      'WhatsApp-Hijack-Epidemic-Exposed',
         format:     'portrait',
         fps:        30,
-        crf:        23,          // Good quality
-        preset:     'medium',    // Moderate speed and quality
-        bgMusic:    null,        // Placeholder for tense, low-key background music
-        bgMusicVol: 0.12,
+        crf:        23,          
+        preset:     'medium',    
+        bgMusic:    'low_freq_tension_drone', 
+        bgMusicVol: 0.15,
         cleanup:    true,
         postProcess: {
             grain: true,
             grainStrength: 0.04,
             vignette: true,
-            vignetteStrength: 0.6
+            vignetteStrength: 0.7
         }
     },
 
     defaults: {
-        voice:      'bm_george',   // Authoritative, deep male voice
-        transition: 'glitch',      // Dramatic, unsettling transition
-        transitionDuration: 0.6,
+        voice:      'bm_george',   // Deep, authoritative male warning voice
+        transition: 'glitch',      
+        transitionDuration: 0.5,
     },
 
     scenes: [
-        //----start of SCENE_HOOK_DIGITAL_FOOTPRINT----
-// SCENE 1: HOOK - DIGITAL FOOTPRINT (5 sec)
-        // Poses the unsettling question about TikTok's data collection.
+        //----start of SCENE_HOOK----
+        // SCENE 1: THE DISRUPTIVE HOOK (0 - 6 seconds)
         {
             tts: {
-                text: 'Every tap, every secret. TikTok is logging your digital life. What if you knew exactly what they took?',
+                text: 'One trick text message. That is all it takes to lock you out of your own WhatsApp forever. Your private chats, your business, your identity... stolen in sixty seconds.',
                 voice: 'bm_george',
-                pauseAfter: 0.2,
+                pauseAfter: 0.1,
             },
             transition: 'zoom-in',
-            transitionDuration: 0.7,
+            transitionDuration: 0.6,
             layers: [
                 {
                     type: 'gradient',
                     gradientType: 'radial',
-                    colors: ['#000000', '#1A002A', '#000000'],
+                    colors: ['#000000', '#002B11', '#000000'],
                     animated: true,
                     vignette: true,
-                    vignetteStrength: 0.8,
+                    vignetteStrength: 0.85,
                 },
                 {
                     type: 'scanlines',
                     spacing: 3,
                     opacity: 0.2
                 },
-                // First scary hook point
                 {
                     type:      'text',
-                    text:      'THEY\'RE WATCHING.',
+                    text:      'WHATSAPP\nHIJACK.',
                     x: 540, y: 700,
-                    fontSize:  100,
+                    fontSize:  115,
                     fontFamily: 'Impact, Arial Black, sans-serif',
                     fontWeight: 'bold',
-                    color:     '#FF004C',
-                    gradient:  ['#FF004C', '#FF0088'],
+                    color:     '#00FF66',
+                    gradient:  ['#00FF66', '#00E676'],
                     stroke:    true,
                     strokeColor: '#000000',
-                    strokeWidth: 8,
+                    strokeWidth: 9,
                     shadow:    true,
                     shadowColor: 'rgba(0,0,0,0.9)',
-                    shadowBlur: 40,
+                    shadowBlur: 35,
                     animation: 'pop',
-                    animDur:   0.4,
+                    animDur:   0.3,
                     startT:    0.1,
-                    exitAt:    2.0, // Exit quickly for the next point
+                    exitAt:    2.6,
                     exitDur:   0.3
                 },
-                // Second scary hook point, rotating in
                 {
                     type:      'text',
-                    text:      'YOUR PRIVATE DATA?',
-                    x: 540, y: 850,
-                    fontSize:  60,
+                    text:      'YOU ARE ONE SMS AWAY FROM LOSING IT ALL',
+                    x: 540, y: 880,
+                    fontSize:  50,
                     color:     '#E0E0E0',
                     align:     'center',
                     maxWidth:  900,
-                    animation: 'slide-up', // Slide up after first text exits
+                    animation: 'slide-up',
                     animDur:   0.4,
-                    startT:    2.2,
+                    startT:    2.8,
                 },
                 {
                     type:        'progress-bar',
@@ -98,22 +92,21 @@ module.exports = {
                     y:           1855,
                     width:       972,
                     height:      8,
-                    color:       '#FF004C',
+                    color:       '#00FF66',
                     trackColor:  'rgba(255,255,255,0.1)',
                     showLabel:   false,
                 },
             ],
         },
-//----end of SCENE_HOOK_DIGITAL_FOOTPRINT----
+        //----end of SCENE_HOOK----
 
-        //----start of SCENE_CLIPBOARD_DATA_REVEAL----
-// SCENE 2: CLIPBOARD DATA REVEAL (6 sec)
-        // Highlighting the alarming access to clipboard data with a visual.
+        //----start of SCENE_DATA_BREAKDOWN----
+        // SCENE 2: THE DATA BREAKDOWN (6 - 13 seconds)
         {
             tts: {
-                text: 'Cybersecurity reports confirm TikTok accesses your clipboard. Passwords, private messages, bank details. Anything you copy.',
+                text: 'Global security logs reveal a massive shift. Hackers no longer bypass complex encryption. Instead, sixty-five percent of successful takeovers use simple psychological manipulation.',
                 voice: 'bm_george',
-                pauseAfter: 0.4,
+                pauseAfter: 0.2,
             },
             transition: 'split-h',
             transitionDuration: 0.5,
@@ -121,67 +114,55 @@ module.exports = {
                 {
                     type: 'gradient',
                     gradientType: 'linear',
-                    colors: ['#0A001F', '#2A004A', '#0A001F'],
+                    colors: ['#0A001F', '#110022', '#0A001F'],
                     angle: 90,
                     vignette: true,
                     vignetteStrength: 0.7,
                 },
                 {
                     type:      'text',
-                    text:      'CLIPBOARD\nINVASION',
+                    text:      'ATTACK VECTORS',
                     x: 540, y: 300,
                     fontSize:  85,
                     fontFamily: 'Impact, Arial Black, sans-serif',
                     fontWeight: 'bold',
-                    color:     '#A020F0',
-                    gradient:  ['#A020F0', '#E0BBE4'],
+                    color:     '#00FFCC',
                     stroke:    true,
                     strokeColor: '#000000',
                     strokeWidth: 6,
                     shadow:    true,
-                    shadowColor: 'rgba(0,0,0,0.7)',
-                    shadowBlur: 30,
+                    shadowColor: 'rgba(0,0,0,0.8)',
+                    shadowBlur: 25,
                     animation: 'slide-up',
-                    animDur:   0.5,
-                    startT:    0.2,
+                    animDur:   0.4,
+                    startT:    0.1,
                 },
                 {
                     type: 'chart',
                     chartType: 'bar',
-                    x: 100, y: 500,
+                    x: 100, y: 520,
                     width: 880, height: 400,
                     animDur: 1.2,
                     data: [
-                        { label: 'Passwords', value: 95, color: '#A020F0' },
-                        { label: 'Bank Details', value: 80, color: '#E0BBE4' },
-                        { label: 'Private Chats', value: 70, color: '#6A057A' }
+                        { label: 'Social Engineering', value: 65, color: '#00FF66' },
+                        { label: 'Voicemail Exploits', value: 23, color: '#00FFCC' },
+                        { label: 'SIM Swap Routing', value: 12, color: '#116633' }
                     ],
-                    labelFontColor: '#E0BBE4',
+                    labelFontColor: '#00FFCC',
                     valueFontColor: '#FFFFFF',
                     gridColor: 'rgba(255,255,255,0.1)'
                 },
                 {
                     type:      'text',
-                    text:      'Every copy. Every paste. EXPOSED.',
-                    x: 540, y: 980,
+                    text:      'They don’t hack the app. They hack the person.',
+                    x: 540, y: 1000,
                     fontSize:  42,
-                    color:     '#E0BBE4',
+                    color:     '#FFFFFF',
                     align:     'center',
-                    maxWidth:  800,
-                    lineHeight: 1.2,
+                    maxWidth:  850,
                     animation: 'fade',
-                    animDur:   0.4,
-                    startT:    1.5, // Appears after chart animation
-                },
-                {
-                    type:     'waveform',
-                    vizStyle: 'wave',
-                    x: 54, y: 1700,
-                    width:    972,
-                    height:   70,
-                    bars:     48,
-                    color:    '#A020F0',
-                    opacity:  0.3,
+                    animDur:   0.5,
+                    startT:    1.4,
                 },
                 {
                     type:        'progress-bar',
@@ -189,22 +170,21 @@ module.exports = {
                     y:           1855,
                     width:       972,
                     height:      8,
-                    color:       '#A020F0',
+                    color:       '#00FFCC',
                     trackColor:  'rgba(255,255,255,0.1)',
                     showLabel:   false,
                 },
             ],
         },
-//----end of SCENE_CLIPBOARD_DATA_REVEAL----
+        //----end of SCENE_DATA_BREAKDOWN----
 
-        //----start of SCENE_KEYSTROKE_AND_MORE----
-// SCENE 3: KEYSTROKE PATTERNS & MORE (7 sec)
-        // Expanding on other types of data collection, emphasizing surveillance.
+        //----start of SCENE_ROUTING_EXPLOIT----
+        // SCENE 3: THE ROUTING EXPLOIT (13 - 21 seconds)
         {
             tts: {
-                text: 'It goes deeper. Keystroke patterns, every app you open, your precise location. Your phone is a hidden surveillance device.',
+                text: 'The primary trap occurs at night. Scammers trigger verification codes to your number and route the authentication to your telecom voicemail while you sleep.',
                 voice: 'bm_george',
-                pauseAfter: 0.4,
+                pauseAfter: 0.2,
             },
             transition: 'wipe-right',
             transitionDuration: 0.5,
@@ -212,57 +192,47 @@ module.exports = {
                 {
                     type: 'gradient',
                     gradientType: 'linear',
-                    colors: ['#000000', '#2A0A00', '#000000'],
+                    colors: ['#000000', '#0D1B10', '#000000'],
                     angle: 45,
-                    animated: false,
-                    vignette: true,
-                    vignetteStrength: 0.7,
-                },
-                {
-                    type: 'shape',
-                    shape: 'triangle', // Warning symbol
-                    x: 540, y: 600,
-                    width: 700, height: 600,
-                    color: 'rgba(80, 0, 0, 0.3)',
-                    rotation: Math.PI / 2, // Rotate to point up
-                    stroke: true,
-                    strokeColor: '#FF4500',
-                    strokeWidth: 5,
-                    animation: 'spin',
-                    speed: 0.3,
-                    enterAt: 0.0,
                 },
                 {
                     type:      'text',
-                    text:      'KEYSTROKE\nSURVEILLANCE',
-                    x: 540, y: 500,
-                    fontSize:  75,
-                    fontFamily: 'Impact, Arial Black, sans-serif',
-                    fontWeight: 'bold',
-                    color:     '#FF4500',
-                    gradient:  ['#FF4500', '#FFA07A'],
-                    stroke:    true,
-                    strokeColor: '#000000',
-                    strokeWidth: 6,
-                    shadow:    true,
-                    shadowColor: 'rgba(0,0,0,0.7)',
-                    shadowBlur: 30,
-                    animation: 'bounce-in',
-                    animDur:   0.6,
+                    text:      'THE MIDNIGHT LOOP',
+                    x: 540, y: 280,
+                    fontSize:  85,
+                    fontFamily: 'Impact, sans-serif',
+                    color:     '#FFFFFF',
+                    animation: 'pop',
+                    animDur:   0.3,
                     startT:    0.1,
                 },
                 {
+                    type: 'chart',
+                    chartType: 'line',
+                    x: 100, y: 480,
+                    width: 880, height: 420,
+                    animDur: 1.5,
+                    data: [
+                        { label: '8 PM', value: 10, color: '#333333' },
+                        { label: '11 PM', value: 45, color: '#00FF66' },
+                        { label: '2 AM', value: 92, color: '#00FFCC' },
+                        { label: '5 AM', value: 87, color: '#00EE99' }
+                    ],
+                    labelFontColor: '#FFFFFF',
+                    valueFontColor: '#00FF66',
+                    gridColor: 'rgba(255,255,255,0.05)'
+                },
+                {
                     type:      'text',
-                    text:      'EVERY KEY PRESS | APP USAGE LOGS\nPRECISE LOCATION | DEVICE FINGERPRINT',
-                    x: 540, y: 800,
+                    text:      '92% of automated routing strikes during sleep hours.',
+                    x: 540, y: 980,
                     fontSize:  38,
-                    color:     '#FFA07A',
+                    color:     '#00FFCC',
+                    fontWeight: 'bold',
                     align:     'center',
-                    maxWidth:  850,
-                    lineHeight: 1.3,
                     animation: 'fade',
-                    animDur:   0.5,
-                    startT:    0.6,
+                    animDur:   0.4,
+                    startT:    1.6,
                 },
                 {
                     type:        'progress-bar',
@@ -270,70 +240,65 @@ module.exports = {
                     y:           1855,
                     width:       972,
                     height:      8,
-                    color:       '#FF4500',
+                    color:       '#00FFCC',
                     trackColor:  'rgba(255,255,255,0.1)',
                     showLabel:   false,
                 },
             ],
         },
-//----end of SCENE_KEYSTROKE_AND_MORE----
+        //----end of SCENE_ROUTING_EXPLOIT----
 
-        //----start of SCENE_CONCLUSION_CALL_TO_AWARENESS----
-        // SCENE 4: CONCLUSION & CALL TO AWARENESS (6 sec)
-        // Summarizing the impact and urging users to be aware.
+        //----start of SCENE_DEFENSE_CTA----
+        // SCENE 4: DEFENSE & COMMENT TRIGGER (21 - 28 seconds)
         {
             tts: {
-                text: 'Your digital footprint is more expansive than you think. Understanding what you share is the first step to protecting your online privacy.',
+                text: 'To block them instantly, open your settings, enable Two-Step Verification, and add a custom PIN code. Do it now before you lose your account.',
                 voice: 'bm_george',
                 pauseAfter: 0.5,
             },
-            transition: 'fade',
-            transitionDuration: 0.8,
+            transition: 'zoom-out',
+            transitionDuration: 0.6,
             layers: [
                 {
                     type: 'gradient',
-                    gradientType: 'linear',
-                    colors: ['#000000', '#001A0A', '#000000'],
-                    angle: 135,
-                    animated: true,
-                    vignette: true,
-                    vignetteStrength: 0.8,
-                },
-                {
-                    type: 'scanlines',
-                    spacing: 4,
-                    opacity: 0.3
+                    gradientType: 'radial',
+                    colors: ['#001C0E', '#000000', '#000000'],
+                    animated: false,
                 },
                 {
                     type:      'text',
-                    text:      'PROTECT YOUR\nPRIVACY',
+                    text:      'SECURE\nYOUR CHATS.',
                     x: 540, y: 650,
-                    fontSize:  95,
-                    fontFamily: 'Impact, Arial Black, sans-serif',
-                    fontWeight: 'bold',
-                    color:     '#32CD32',
-                    gradient:  ['#32CD32', '#00FF7F'],
-                    stroke:    true,
-                    strokeColor: '#000000',
-                    strokeWidth: 7,
-                    shadow:    true,
-                    shadowColor: 'rgba(0,0,0,0.9)',
-                    shadowBlur: 45,
+                    fontSize:  110,
+                    fontFamily: 'Impact, sans-serif',
+                    color:     '#00FF66',
+                    stroke:    true, strokeColor: '#000000', strokeWidth: 10,
                     animation: 'pop',
-                    animDur:   0.6,
+                    animDur:   0.2,
                     startT:    0.1,
+                    exitAt:    3.6
                 },
                 {
                     type:      'text',
-                    text:      '#DataPrivacy #TikTokExposed #DigitalRights',
+                    text:      'Has anyone tried to send you a random code?\nComment "PIN" below and I will send the safety guide.',
                     x: 540, y: 900,
-                    fontSize:  40,
-                    color:     '#00FF7F',
+                    fontSize:  44,
+                    color:     '#FFFFFF',
                     align:     'center',
-                    lineHeight: 1.2,
-                    animation: 'fade',
+                    maxWidth:  850,
+                    lineHeight: 1.4,
+                    animation: 'slide-up',
                     animDur:   0.5,
-                    startT:    0.7,
+                    startT:    3.9,
+                },
+                {
+                    type:     'waveform',
+                    vizStyle: 'wave',
+                    x: 54, y: 1700,
+                    width:    972,
+                    height:   80,
+                    color:    '#00FF66',
+                    opacity:  0.4,
                 },
                 {
                     type:        'progress-bar',
@@ -341,12 +306,12 @@ module.exports = {
                     y:           1855,
                     width:       972,
                     height:      8,
-                    color:       '#32CD32',
+                    color:       '#00FF66',
                     trackColor:  'rgba(255,255,255,0.1)',
                     showLabel:   false,
                 },
-            ],
-        },
-        //----end of SCENE_CONCLUSION_CALL_TO_AWARENESS----
-    ],
+            ]
+        }
+        //----end of SCENE_DEFENSE_CTA----
+    ]
 };
