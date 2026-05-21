@@ -1,317 +1,441 @@
 /**
  * WHATSAPP ACCOUNT HIJACK DOCUMENTARY CONFIG v2026
  *
- * A deep, data-driven look into social engineering traps, automated 
- * carrier verification loops, and the black market for stolen accounts.
+ * Documentary-style short built like viral cyber expose reels.
+ * Strong intro -> data reveal -> scam method -> protection CTA
  */
+
 module.exports = {
-    output: {
-        title:      'WhatsApp-Hijack-Epidemic-Exposed',
-        format:     'portrait',
-        fps:        30,
-        crf:        26,          
-        preset:     'ultrafast',    
-        bgMusic:    'low_freq_tension_drone', 
-        bgMusicVol: 0.15,
-        cleanup:    true,
-        postProcess: {
-            grain: true,
-            grainStrength: 0.04,
-            vignette: true,
-            vignetteStrength: 0.7
+  output: {
+    title: 'WhatsApp_Hijack_Exposed_2026',
+    format: 'portrait',
+    fps: 30,
+
+    // Balance quality + filesize
+    crf: 24,
+    preset: 'ultrafast',
+
+    bgMusic: './assets/music/cyber_tension.mp3',
+    bgMusicVol: 0.12,
+
+    cleanup: true,
+
+    postProcess: {
+      grain: true,
+      grainStrength: 0.03,
+      vignette: true,
+      vignetteStrength: 0.55
+    }
+  },
+
+  defaults: {
+    voice: 'bm_george',
+    transition: 'glitch',
+    transitionDuration: 0.45,
+  },
+
+  scenes: [
+
+    // =====================================================
+    // SCENE 1 — DOCUMENTARY INTRO
+    // =====================================================
+    {
+      tts: {
+        text: 'This is not a movie scam. It is happening right now. Thousands of WhatsApp accounts are stolen every single week.',
+        voice: 'bm_george',
+        pauseAfter: 0.25
+      },
+
+      transition: 'fade',
+      transitionDuration: 0.7,
+
+      layers: [
+        {
+          type: 'gradient',
+          gradientType: 'radial',
+          colors: ['#000000', '#071B11', '#000000'],
+          animated: true,
+          vignette: true,
+          vignetteStrength: 0.75
+        },
+
+        {
+          type: 'scanlines',
+          spacing: 3,
+          opacity: 0.18
+        },
+
+        // moving shapes
+        {
+          type: 'shape',
+          shape: 'circle',
+          x: 220,
+          y: 350,
+          width: 180,
+          height: 180,
+          color: 'rgba(0,255,120,0.08)',
+          blur: 10,
+          animation: 'float',
+          speed: 0.4
+        },
+
+        {
+          type: 'shape',
+          shape: 'triangle',
+          x: 860,
+          y: 1200,
+          width: 260,
+          height: 260,
+          color: 'rgba(0,255,120,0.05)',
+          stroke: true,
+          strokeColor: '#00FF88',
+          strokeWidth: 3,
+          animation: 'spin',
+          speed: 0.2
+        },
+
+        {
+          type: 'text',
+          text: 'WHATSAPP\nEXPOSED',
+          x: 540,
+          y: 690,
+          fontSize: 112,
+          fontFamily: 'Impact, Arial Black, sans-serif',
+          fontWeight: 'bold',
+          color: '#00FF88',
+          gradient: ['#00FF88', '#00CC66'],
+          stroke: true,
+          strokeColor: '#000000',
+          strokeWidth: 8,
+          shadow: true,
+          shadowColor: 'rgba(0,0,0,0.9)',
+          shadowBlur: 40,
+          animation: 'pop',
+          animDur: 0.4
+        },
+
+        {
+          type: 'text',
+          text: 'THE ACCOUNT HIJACK EPIDEMIC',
+          x: 540,
+          y: 980,
+          fontSize: 48,
+          color: '#E0E0E0',
+          align: 'center',
+          animation: 'slide-up',
+          animDur: 0.5,
+          startT: 1.4
+        },
+
+        {
+          type: 'progress-bar',
+          x: 54,
+          y: 1855,
+          width: 972,
+          height: 8,
+          color: '#00FF88',
+          trackColor: 'rgba(255,255,255,0.1)'
         }
+      ]
     },
 
-    defaults: {
-        voice:      'bm_george',   // Deep, authoritative male warning voice
-        transition: 'glitch',      
-        transitionDuration: 0.5,
+    // =====================================================
+    // SCENE 2 — HOW THEY GET THE CODE
+    // =====================================================
+    {
+      tts: {
+        text: 'The attack starts with a fake message. Scammers pretend to be your friend, your bank, or even WhatsApp support. Then they ask for the six digit verification code sent to your phone.',
+        voice: 'bm_george',
+        pauseAfter: 0.2
+      },
+
+      transition: 'split-h',
+
+      layers: [
+        {
+          type: 'gradient',
+          gradientType: 'linear',
+          colors: ['#0A001F', '#071B11', '#000000'],
+          angle: 90,
+          vignette: true,
+          vignetteStrength: 0.7
+        },
+
+        {
+          type: 'shape',
+          shape: 'square',
+          x: 540,
+          y: 650,
+          width: 700,
+          height: 700,
+          color: 'rgba(0,255,120,0.04)',
+          stroke: true,
+          strokeColor: '#00FF88',
+          strokeWidth: 3,
+          animation: 'spin',
+          speed: 0.08
+        },
+
+        {
+          type: 'text',
+          text: 'THE CODE\nTRAP',
+          x: 540,
+          y: 250,
+          fontSize: 88,
+          fontFamily: 'Impact, Arial Black, sans-serif',
+          fontWeight: 'bold',
+          color: '#00FFAA',
+          stroke: true,
+          strokeColor: '#000000',
+          strokeWidth: 7,
+          animation: 'slide-up',
+          animDur: 0.4
+        },
+
+        // graph higher with more bottom spacing
+        {
+          type: 'chart',
+          chartType: 'bar',
+          x: 110,
+          y: 470,
+          width: 860,
+          height: 360,
+          animDur: 1.2,
+
+          data: [
+            { label: 'Fake Support', value: 73, color: '#00FF88' },
+            { label: 'Friend Scam', value: 52, color: '#00D97A' },
+            { label: 'Prize Links', value: 39, color: '#008F55' }
+          ],
+
+          labelFontColor: '#D0FFD9',
+          valueFontColor: '#FFFFFF',
+          gridColor: 'rgba(255,255,255,0.08)'
+        },
+
+        {
+          type: 'text',
+          text: 'One code is enough to lose the account.',
+          x: 540,
+          y: 980,
+          fontSize: 42,
+          color: '#E0E0E0',
+          align: 'center',
+          animation: 'fade',
+          startT: 1.4
+        },
+
+        {
+          type: 'waveform',
+          vizStyle: 'bars',
+          x: 54,
+          y: 1680,
+          width: 972,
+          height: 70,
+          color: '#00FF88',
+          opacity: 0.25
+        },
+
+        {
+          type: 'progress-bar',
+          x: 54,
+          y: 1855,
+          width: 972,
+          height: 8,
+          color: '#00FF88',
+          trackColor: 'rgba(255,255,255,0.1)'
+        }
+      ]
     },
 
-    scenes: [
-        //----start of SCENE_HOOK----
-        // SCENE 1: THE DISRUPTIVE HOOK (0 - 6 seconds)
-        {
-            tts: {
-                text: 'One trick text message. That is all it takes to lock you out of your own WhatsApp forever. Your private chats, your business, your identity... stolen in sixty seconds.',
-                voice: 'bm_george',
-                pauseAfter: 0.1,
-            },
-            transition: 'zoom-in',
-            transitionDuration: 0.6,
-            layers: [
-                {
-                    type: 'gradient',
-                    gradientType: 'radial',
-                    colors: ['#000000', '#002B11', '#000000'],
-                    animated: true,
-                    vignette: true,
-                    vignetteStrength: 0.85,
-                },
-                {
-                    type: 'scanlines',
-                    spacing: 3,
-                    opacity: 0.2
-                },
-                {
-                    type:      'text',
-                    text:      'WHATSAPP\nHIJACK.',
-                    x: 540, y: 700,
-                    fontSize:  115,
-                    fontFamily: 'Impact, Arial Black, sans-serif',
-                    fontWeight: 'bold',
-                    color:     '#00FF66',
-                    gradient:  ['#00FF66', '#00E676'],
-                    stroke:    true,
-                    strokeColor: '#000000',
-                    strokeWidth: 9,
-                    shadow:    true,
-                    shadowColor: 'rgba(0,0,0,0.9)',
-                    shadowBlur: 35,
-                    animation: 'pop',
-                    animDur:   0.3,
-                    startT:    0.1,
-                    exitAt:    2.6,
-                    exitDur:   0.3
-                },
-                {
-                    type:      'text',
-                    text:      'YOU ARE ONE SMS AWAY FROM LOSING IT ALL',
-                    x: 540, y: 880,
-                    fontSize:  50,
-                    color:     '#E0E0E0',
-                    align:     'center',
-                    maxWidth:  900,
-                    animation: 'slide-up',
-                    animDur:   0.4,
-                    startT:    2.8,
-                },
-                {
-                    type:        'progress-bar',
-                    x:           54,
-                    y:           1855,
-                    width:       972,
-                    height:      8,
-                    color:       '#00FF66',
-                    trackColor:  'rgba(255,255,255,0.1)',
-                    showLabel:   false,
-                },
-            ],
-        },
-        //----end of SCENE_HOOK----
+    // =====================================================
+    // SCENE 3 — ACCOUNT TAKEOVER
+    // =====================================================
+    {
+      tts: {
+        text: 'Once the code is entered, the victim is instantly logged out. The scammers activate two step verification and lock the real owner out completely.',
+        voice: 'bm_george',
+        pauseAfter: 0.2
+      },
 
-        //----start of SCENE_DATA_BREAKDOWN----
-        // SCENE 2: THE DATA BREAKDOWN (6 - 13 seconds)
-        {
-            tts: {
-                text: 'Global security logs reveal a massive shift. Hackers no longer bypass complex encryption. Instead, sixty-five percent of successful takeovers use simple psychological manipulation.',
-                voice: 'bm_george',
-                pauseAfter: 0.2,
-            },
-            transition: 'split-h',
-            transitionDuration: 0.5,
-            layers: [
-                {
-                    type: 'gradient',
-                    gradientType: 'linear',
-                    colors: ['#0A001F', '#110022', '#0A001F'],
-                    angle: 90,
-                    vignette: true,
-                    vignetteStrength: 0.7,
-                },
-                {
-                    type:      'text',
-                    text:      'ATTACK VECTORS',
-                    x: 540, y: 300,
-                    fontSize:  85,
-                    fontFamily: 'Impact, Arial Black, sans-serif',
-                    fontWeight: 'bold',
-                    color:     '#00FFCC',
-                    stroke:    true,
-                    strokeColor: '#000000',
-                    strokeWidth: 6,
-                    shadow:    true,
-                    shadowColor: 'rgba(0,0,0,0.8)',
-                    shadowBlur: 25,
-                    animation: 'slide-up',
-                    animDur:   0.4,
-                    startT:    0.1,
-                },
-                {
-                    type: 'chart',
-                    chartType: 'bar',
-                    x: 100, y: 520,
-                    width: 880, height: 400,
-                    animDur: 1.2,
-                    data: [
-                        { label: 'Social Engineering', value: 65, color: '#00FF66' },
-                        { label: 'Voicemail Exploits', value: 23, color: '#00FFCC' },
-                        { label: 'SIM Swap Routing', value: 12, color: '#116633' }
-                    ],
-                    labelFontColor: '#00FFCC',
-                    valueFontColor: '#FFFFFF',
-                    gridColor: 'rgba(255,255,255,0.1)'
-                },
-                {
-                    type:      'text',
-                    text:      'They don’t hack the app. They hack the person.',
-                    x: 540, y: 1000,
-                    fontSize:  42,
-                    color:     '#FFFFFF',
-                    align:     'center',
-                    maxWidth:  850,
-                    animation: 'fade',
-                    animDur:   0.5,
-                    startT:    1.4,
-                },
-                {
-                    type:        'progress-bar',
-                    x:           54,
-                    y:           1855,
-                    width:       972,
-                    height:      8,
-                    color:       '#00FFCC',
-                    trackColor:  'rgba(255,255,255,0.1)',
-                    showLabel:   false,
-                },
-            ],
-        },
-        //----end of SCENE_DATA_BREAKDOWN----
+      transition: 'wipe-right',
 
-        //----start of SCENE_ROUTING_EXPLOIT----
-        // SCENE 3: THE ROUTING EXPLOIT (13 - 21 seconds)
+      layers: [
         {
-            tts: {
-                text: 'The primary trap occurs at night. Scammers trigger verification codes to your number and route the authentication to your telecom voicemail while you sleep.',
-                voice: 'bm_george',
-                pauseAfter: 0.2,
-            },
-            transition: 'wipe-right',
-            transitionDuration: 0.5,
-            layers: [
-                {
-                    type: 'gradient',
-                    gradientType: 'linear',
-                    colors: ['#000000', '#0D1B10', '#000000'],
-                    angle: 45,
-                },
-                {
-                    type:      'text',
-                    text:      'THE MIDNIGHT LOOP',
-                    x: 540, y: 280,
-                    fontSize:  85,
-                    fontFamily: 'Impact, sans-serif',
-                    color:     '#FFFFFF',
-                    animation: 'pop',
-                    animDur:   0.3,
-                    startT:    0.1,
-                },
-                {
-                    type: 'chart',
-                    chartType: 'line',
-                    x: 100, y: 480,
-                    width: 880, height: 420,
-                    animDur: 1.5,
-                    data: [
-                        { label: '8 PM', value: 10, color: '#333333' },
-                        { label: '11 PM', value: 45, color: '#00FF66' },
-                        { label: '2 AM', value: 92, color: '#00FFCC' },
-                        { label: '5 AM', value: 87, color: '#00EE99' }
-                    ],
-                    labelFontColor: '#FFFFFF',
-                    valueFontColor: '#00FF66',
-                    gridColor: 'rgba(255,255,255,0.05)'
-                },
-                {
-                    type:      'text',
-                    text:      '92% of automated routing strikes during sleep hours.',
-                    x: 540, y: 980,
-                    fontSize:  38,
-                    color:     '#00FFCC',
-                    fontWeight: 'bold',
-                    align:     'center',
-                    animation: 'fade',
-                    animDur:   0.4,
-                    startT:    1.6,
-                },
-                {
-                    type:        'progress-bar',
-                    x:           54,
-                    y:           1855,
-                    width:       972,
-                    height:      8,
-                    color:       '#00FFCC',
-                    trackColor:  'rgba(255,255,255,0.1)',
-                    showLabel:   false,
-                },
-            ],
+          type: 'gradient',
+          gradientType: 'linear',
+          colors: ['#000000', '#10261A', '#000000'],
+          angle: 45
         },
-        //----end of SCENE_ROUTING_EXPLOIT----
 
-        //----start of SCENE_DEFENSE_CTA----
-        // SCENE 4: DEFENSE & COMMENT TRIGGER (21 - 28 seconds)
         {
-            tts: {
-                text: 'To block them instantly, open your settings, enable Two-Step Verification, and add a custom PIN code. Do it now before you lose your account.',
-                voice: 'bm_george',
-                pauseAfter: 0.5,
-            },
-            transition: 'zoom-out',
-            transitionDuration: 0.6,
-            layers: [
-                {
-                    type: 'gradient',
-                    gradientType: 'radial',
-                    colors: ['#001C0E', '#000000', '#000000'],
-                    animated: false,
-                },
-                {
-                    type:      'text',
-                    text:      'SECURE\nYOUR CHATS.',
-                    x: 540, y: 650,
-                    fontSize:  110,
-                    fontFamily: 'Impact, sans-serif',
-                    color:     '#00FF66',
-                    stroke:    true, strokeColor: '#000000', strokeWidth: 10,
-                    animation: 'pop',
-                    animDur:   0.2,
-                    startT:    0.1,
-                    exitAt:    3.6
-                },
-                {
-                    type:      'text',
-                    text:      'Has anyone tried to send you a random code?\nComment "PIN" below and I will send the safety guide.',
-                    x: 540, y: 900,
-                    fontSize:  44,
-                    color:     '#FFFFFF',
-                    align:     'center',
-                    maxWidth:  850,
-                    lineHeight: 1.4,
-                    animation: 'slide-up',
-                    animDur:   0.5,
-                    startT:    3.9,
-                },
-                {
-                    type:     'waveform',
-                    vizStyle: 'wave',
-                    x: 54, y: 1700,
-                    width:    972,
-                    height:   80,
-                    color:    '#00FF66',
-                    opacity:  0.4,
-                },
-                {
-                    type:        'progress-bar',
-                    x:           54,
-                    y:           1855,
-                    width:       972,
-                    height:      8,
-                    color:       '#00FF66',
-                    trackColor:  'rgba(255,255,255,0.1)',
-                    showLabel:   false,
-                },
-            ]
+          type: 'shape',
+          shape: 'triangle',
+          x: 540,
+          y: 760,
+          width: 850,
+          height: 700,
+          color: 'rgba(0,255,120,0.04)',
+          stroke: true,
+          strokeColor: '#00FF88',
+          strokeWidth: 4,
+          animation: 'spin',
+          speed: 0.15
+        },
+
+        {
+          type: 'text',
+          text: 'ACCOUNT\nLOCKOUT',
+          x: 540,
+          y: 280,
+          fontSize: 90,
+          fontFamily: 'Impact, sans-serif',
+          color: '#FFFFFF',
+          stroke: true,
+          strokeColor: '#000000',
+          strokeWidth: 7,
+          animation: 'bounce-in'
+        },
+
+        {
+          type: 'chart',
+          chartType: 'line',
+          x: 100,
+          y: 500,
+          width: 880,
+          height: 350,
+          animDur: 1.4,
+
+          data: [
+            { label: 'Code Sent', value: 15 },
+            { label: 'Code Shared', value: 55 },
+            { label: 'Account Taken', value: 96 },
+            { label: 'Recovery Failed', value: 81 }
+          ],
+
+          lineColor: '#00FF88',
+          lineWidth: 7,
+          labelFontColor: '#FFFFFF',
+          valueFontColor: '#00FF88',
+          gridColor: 'rgba(255,255,255,0.06)'
+        },
+
+        {
+          type: 'text',
+          text: 'Most victims realize too late.',
+          x: 540,
+          y: 980,
+          fontSize: 42,
+          color: '#BFFFD3',
+          align: 'center',
+          animation: 'fade',
+          startT: 1.5
+        },
+
+        {
+          type: 'progress-bar',
+          x: 54,
+          y: 1855,
+          width: 972,
+          height: 8,
+          color: '#00FF88',
+          trackColor: 'rgba(255,255,255,0.1)'
         }
-        //----end of SCENE_DEFENSE_CTA----
-    ]
+      ]
+    },
+
+    // =====================================================
+    // SCENE 4 — DEFENSE + CTA
+    // =====================================================
+    {
+      tts: {
+        text: 'Enable two step verification immediately and never share your login code with anyone. Follow for more cybersecurity documentaries and online safety breakdowns.',
+        voice: 'bm_george',
+        pauseAfter: 0.4
+      },
+
+      transition: 'zoom-out',
+
+      layers: [
+        {
+          type: 'gradient',
+          gradientType: 'radial',
+          colors: ['#00160B', '#000000', '#000000'],
+          animated: true,
+          vignette: true,
+          vignetteStrength: 0.75
+        },
+
+        {
+          type: 'scanlines',
+          spacing: 4,
+          opacity: 0.2
+        },
+
+        {
+          type: 'text',
+          text: 'PROTECT\nYOUR ACCOUNT',
+          x: 540,
+          y: 620,
+          fontSize: 100,
+          fontFamily: 'Impact, Arial Black, sans-serif',
+          fontWeight: 'bold',
+          color: '#00FF88',
+          gradient: ['#00FF88', '#7CFFB2'],
+          stroke: true,
+          strokeColor: '#000000',
+          strokeWidth: 8,
+          shadow: true,
+          shadowBlur: 35,
+          shadowColor: 'rgba(0,0,0,0.8)',
+          animation: 'pop'
+        },
+
+        {
+          type: 'text',
+          text: 'ENABLE 2-STEP VERIFICATION NOW',
+          x: 540,
+          y: 960,
+          fontSize: 42,
+          color: '#FFFFFF',
+          align: 'center',
+          animation: 'slide-up',
+          startT: 0.8
+        },
+
+        {
+          type: 'text',
+          text: 'FOLLOW FOR MORE DIGITAL CRIME DOCUMENTARIES',
+          x: 540,
+          y: 1100,
+          fontSize: 36,
+          color: '#00FF88',
+          align: 'center',
+          animation: 'fade',
+          startT: 1.8
+        },
+
+        {
+          type: 'waveform',
+          vizStyle: 'wave',
+          x: 54,
+          y: 1700,
+          width: 972,
+          height: 70,
+          color: '#00FF88',
+          opacity: 0.3
+        },
+
+        {
+          type: 'progress-bar',
+          x: 54,
+          y: 1855,
+          width: 972,
+          height: 8,
+          color: '#00FF88',
+          trackColor: 'rgba(255,255,255,0.1)'
+        }
+      ]
+    }
+  ]
 };
